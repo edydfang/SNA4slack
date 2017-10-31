@@ -93,7 +93,7 @@ body {
   font-weight: normal;
   line-height: 1.5;
   color: #212529;
-  background-color: #fff;
+  background-color: #f9f9f9;
 }
 
 [tabindex="-1"]:focus {
@@ -251,6 +251,7 @@ summary,
 textarea {
   -ms-touch-action: manipulation;
       touch-action: manipulation;
+      font-family: 'Lato', sans-serif;
 }
 
 table {
@@ -285,7 +286,7 @@ select,
 optgroup,
 textarea {
   margin: 0;
-  font-family: inherit;
+  font-family: 'Lato', sans-serif;
   font-size: inherit;
   line-height: inherit;
 }
@@ -392,10 +393,10 @@ template {
   display: none !important;
 }
 
-h1, h2, h3, h4, h5, h6,
+h1, h2, h3, h4, h5, h6, p,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-bottom: 0.5rem;
-  font-family: inherit;
+  font-family: 'Lato', sans-serif;
   font-weight: 500;
   line-height: 1.1;
   color: inherit;
@@ -625,6 +626,12 @@ pre code {
 @media (min-width: 1200px) {
   .container {
     max-width: 1140px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1440px;
   }
 }
 
@@ -971,9 +978,9 @@ pre code {
     max-width: 25%;
   }
   .col-md-4 {
-    -ms-flex: 0 0 33.333333%;
-        flex: 0 0 33.333333%;
-    max-width: 33.333333%;
+    -ms-flex: 0 0 40%;
+        flex: 0 0 40%;
+    max-width: 40%;
   }
   .col-md-5 {
     -ms-flex: 0 0 41.666667%;
@@ -1551,13 +1558,13 @@ pre code {
   display: block;
   width: 100%;
   padding: 0.5rem 0.75rem;
-  font-size: 1rem;
+  font-size: 1.2rem;
   line-height: 1.25;
   color: #495057;
   background-color: #fff;
   background-image: none;
   background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(142, 140, 140, 0.15);
   border-radius: 0.25rem;
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
@@ -1989,14 +1996,14 @@ fieldset[disabled] a.btn {
 
 .btn-primary {
   color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #2ea664;
+  border-color: #2ea664;
 }
 
 .btn-primary:hover {
   color: #fff;
-  background-color: #0069d9;
-  border-color: #0062cc;
+  background-color: #2a965a;
+  border-color: #2a965a;
 }
 
 .btn-primary:focus, .btn-primary.focus {
@@ -2004,15 +2011,15 @@ fieldset[disabled] a.btn {
 }
 
 .btn-primary.disabled, .btn-primary:disabled {
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #25844f;
+  border-color: #25844f;
 }
 
 .btn-primary:active, .btn-primary.active,
 .show > .btn-primary.dropdown-toggle {
-  background-color: #0069d9;
+  background-color: #25844f;
   background-image: none;
-  border-color: #0062cc;
+  border-color: #25844f;
 }
 
 .btn-secondary {
@@ -2478,7 +2485,7 @@ fieldset[disabled] a.btn {
 
 .btn-lg, .btn-group-lg > .btn {
   padding: 0.5rem 1rem;
-  font-size: 1.25rem;
+  font-size: 1rem;
   line-height: 1.5;
   border-radius: 0.3rem;
 }
@@ -2492,7 +2499,8 @@ fieldset[disabled] a.btn {
 
 .btn-block {
   display: block;
-  width: 100%;
+  width: 40%;
+  margin-left: 10px;
 }
 
 .btn-block + .btn-block {
