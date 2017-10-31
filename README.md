@@ -25,7 +25,11 @@ Open [http://localhost:3000](http://localhost:3000) in the browser.
 
 ## TO-DOs
  - [x] Digest chunky json response from SlackArchive api
- - [ ] Index page
+ - [x] Index page
+  - [x] Raw page design
+  - [ ] Input-dependent button color
+  - [ ] Auto-complete
+  - [ ] Animation effect
  - [ ] Channel selection panel
  - [ ] Date span selection
  - [ ] Network graph
