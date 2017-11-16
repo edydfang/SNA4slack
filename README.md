@@ -2,16 +2,21 @@
 A project for [SNA4Slack](http://score-contest.org/2018/projects/sna4slack.php).
 It obtains data from [SlackArchive](http://slackarchive.io/).
 
-## Development environment
-[WebStorm](https://www.jetbrains.com/webstorm/) recommended.
+## Online Demo
 
-## Dependencies
- - [Express](http://expressjs.com/)
- - [Bootstrap](https://getbootstrap.com/)
- - [jQuery](https://jquery.com/)
+[SNA4Slack](https://sna4slack.herokuapp.com)
+
+## Development environment
+
+- [WebStorm](https://www.jetbrains.com/webstorm/) recommended.
+- VSCode
+- ES7 Standard
 
 ## Installation
 Make sure you have installed [node.js](https://nodejs.org/).
+
+ - Node.js >= 7.0
+ - NPM
 
 Run the following commands:
 ```sh
@@ -26,10 +31,10 @@ Open [http://localhost:3000](http://localhost:3000) in the browser.
 ## TO-DOs
  - [x] Digest chunky json response from SlackArchive api
  - [x] Index page
-  - [x] Raw page design
-  - [ ] Input-dependent button color
-  - [ ] Auto-complete
-  - [ ] Animation effect
+ - [x] Raw page design
+ - [ ] Input-dependent button color
+ - [ ] Auto-complete
+ - [ ] Animation effect
  - [ ] Channel selection panel
  - [ ] Date span selection
  - [ ] Network graph
