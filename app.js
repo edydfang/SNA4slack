@@ -41,4 +41,4 @@ app.use(controller());
 
 let port = process.env.PORT || 3000;
 app.listen(port);
-console.log(`app started at port {port}...`);
+console.log(`app started at port ${port}...`);
