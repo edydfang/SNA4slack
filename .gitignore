@@ -57,6 +57,8 @@ typings/
 # dotenv environment variables file
 .env
 
+package-lock.json
+
 .idea/workspace.xml
 .DS_Store
 .vscode
