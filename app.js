@@ -8,7 +8,7 @@ const templating = require('./templating');
 
 const app = new Koa();
 
-//const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production';
 
 // log request URL:
 app.use(async (ctx, next) => {
