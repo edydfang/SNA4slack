@@ -1,12 +1,14 @@
 // api for data retriving:
-var https = require('https');
-var debug = require('debug')('slack-diagram:api');
+//var https = require('https');
+let rp = require("request-promise");
+let debug = require('debug')('slack-diagram:api');
+//let qs = require("qs");
 
 function digest_group(original) {
     var oriobj = JSON.parse(original);
     var newobj = {};
     debug(oriobj.team.length);
-    if(oriobj.team.length != 1) {
+    if (oriobj.team.length != 1) {
         newobj.status = 'invalid';
     } else {
         newobj.status = 'valid';
@@ -23,12 +25,12 @@ function digest_channels(original) {
     try {
         var oriobj = JSON.parse(original);
         debug('#channels: ' + oriobj.channels.length);
-        if(oriobj.channels.length < 1) {
+        if (oriobj.channels.length < 1) {
             newobj.status = 'invalid';
         } else {
             newobj.status = 'valid';
             newobj.channels = [];
-            for(var i=0; i<oriobj.channels.length; i++) {
+            for (var i = 0; i < oriobj.channels.length; i++) {
                 var channel = oriobj.channels[i];
                 var c = {};
                 c.id = channel.channel_id;
@@ -38,7 +40,7 @@ function digest_channels(original) {
                 newobj.channels.push(c)
             }
         }
-    } catch(e) {
+    } catch (e) {
         newobj.status = 'invalid';
     }
     return JSON.stringify(newobj);
@@ -51,15 +53,15 @@ function digest_messages(original, size, offset) {
     try {
         var oriobj = JSON.parse(original);
         // debug('#channels: ' + oriobj.channels.length);
-        if(oriobj.messages.length < 1) {
+        if (oriobj.messages.length < 1) {
             newobj.status = 'invalid';
         } else {
             newobj.status = 'valid';
             newobj.messages = [];
             newobj.total = oriobj.total;
-            for(var i=0; i<oriobj.messages.length; i++) {
+            for (var i = 0; i < oriobj.messages.length; i++) {
                 var message = oriobj.messages[i];
-                if(message.type != 'message') {
+                if (message.type != 'message') {
                     continue;
                 }
                 var m = {};
@@ -69,7 +71,7 @@ function digest_messages(original, size, offset) {
                 newobj.messages.push(m);
             }
             newobj.related = {};
-            for(var id in oriobj.related.users) {
+            for (var id in oriobj.related.users) {
                 var user = oriobj.related.users[id];
                 var u = {};
                 u.name = user.name;
@@ -80,38 +82,73 @@ function digest_messages(original, size, offset) {
                 newobj.related[id] = u;
             }
         }
-    } catch(e) {
+    } catch (e) {
         newobj.status = 'invalid';
     }
     return JSON.stringify(newobj);
 }
 
-var get_group_info = async (ctx, next) => {
-    var options = {
-        hostname: 'api.slackarchive.io',
-        path: '/v1/team',
-        headers: {'referer': 'https://' + ctx.query.domain + '.slackarchive.io/'}
+let get_group_info = async (ctx, next) => {
+    let options = {
+        uri: 'https://api.slackarchive.io/v1/team',
+        headers: { 'referer': 'https://' + ctx.query.domain + '.slackarchive.io/' }
     };
-
-    var callback = function(response) {
-        var result = ''
-        response.on('data', function (chunk) {
-            result += chunk;
-            // debug('got new chunk of size ' + chunk.length)
-        });
-        response.on('end', function () {
-            ctx.response.body = digest_group(result);
-            console.log(digest_group(result));
-        })
+    let result;
+    try {
+        result = await rp(options);
+    } catch (err) {
+        debug(err);
+    } finally {
+        debug(result);
     }
+    ctx.response.body = digest_group(result);
+};
 
-    var req = https.request(options, callback);
-    req.on('error', (e) => {
-        debug(e);
-    });
-    req.end();
+/* GET group channels. */
+let get_channels = async (ctx, next) => {
+    debug('group domain: ' +ctx.query.domain);
+    let options = {
+        uri: 'https://api.slackarchive.io/v1/channels',
+        headers: { 'referer': 'https://' + ctx.query.domain + '.slackarchive.io/' }
+    };
+    let result;
+    try {
+        result = await rp(options);
+    } catch (err) {
+        debug(err);
+    } finally {
+        debug(result);
+    }
+    ctx.response.body = digest_channels(result);
+};
+
+/* GET messages. */
+let get_messages  = async (ctx, next) => {
+    debug('group domain: ' + ctx.query.domain);
+    let size = ctx.query.size;
+    let offset = ctx.query.offset;
+    let options = {
+        uri: 'https://api.slackarchive.io/v1/messages',
+        headers: { 'referer': 'https://' + ctx.query.domain + '.slackarchive.io/' },
+        qs: {
+            size: ctx.query.size || 100,
+            channel: ctx.query.channel || '',
+            offset: ctx.query.offset || 0
+        }
+    };
+    let result;
+    try {
+        result = await rp(options);
+    } catch (err) {
+        debug(err);
+    } finally {
+        debug(result);
+    }
+    ctx.response.body = digest_messages(result, size, offset);
 };
 
 module.exports = {
-    'GET /group': get_group_info
+    'GET /group': get_group_info,
+    'GET /channels': get_channels,
+    'GET /messages': get_messages,
 };

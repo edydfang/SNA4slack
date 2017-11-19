@@ -10,12 +10,12 @@ It obtains data from [SlackArchive](http://slackarchive.io/).
 
 - [WebStorm](https://www.jetbrains.com/webstorm/) recommended.
 - VSCode
-- ES7 Standard
+- ECM 2017 Standard
 
 ## Installation
 Make sure you have installed [node.js](https://nodejs.org/).
 
- - Node.js >= 7.0
+ - Node.js >= 7.6 (async/await)
  - NPM
 
 Run the following commands:
