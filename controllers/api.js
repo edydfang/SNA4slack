@@ -176,6 +176,7 @@ let get_image  = async (ctx, next) => {
             type = 'image/gif'
         }
         ctx.set('Content-Type', type);
+        ctx.set('Cache-Control', 'public, max-age=86400');
     } catch (err) {
         debug(err);
         throw APIError('query failed');
