@@ -253,7 +253,24 @@
               </div>
 
               <div class="col-md-9 col-sm-9 col-xs-12">
-                <div id="chart_plot_01" class="demo-placeholder"></div>
+                  <style>
+                      
+                      .links line {
+                        stroke: #999;
+                        stroke-opacity: 2;
+                      }
+                      
+                      .nodes circle {
+                        stroke: #fff;
+                        stroke-width: 5px;
+                      }
+                      
+                      </style>
+                <div>
+                    <svg width="960" height="600"></svg>
+                    <script src="//d3js.org/d3.v4.min.js"></script>
+                    <script src="static/js/tmp_chart.js"></script>
+                </div>
               </div>
               <div class="col-md-3 col-sm-3 col-xs-12 bg-white">
                 <div class="x_title">
