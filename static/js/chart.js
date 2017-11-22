@@ -1,7 +1,7 @@
 "use strict"
 document.addEventListener('DOMContentLoaded', function () {
     var mainUser;
-    $.get('http://localhost:3000/api/messages?domain=kubernetes&size=1000&channel=C09R23FHP&offset=0', function(data) {
+    $.get('api/messages?domain=kubernetes&size=1000&channel=C09R23FHP&offset=0', function(data) {
         var cyobj = {
             container: document.getElementById('cy'),
             elements: [],
@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 data: {
                     id: id,
                     name: user.name,
-                    image: 'http://localhost:3000/api/image?' + user.avatar
+                    image: 'api/image?' + user.avatar
                 }
             });
         }

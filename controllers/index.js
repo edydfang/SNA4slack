@@ -6,7 +6,7 @@ const fs = require('mz/fs');
 function getPages(pagename) {
     return async (ctx, next) => {
         let rpath = pagename;
-        let fp = path.join(__dirname + '/../static/', rpath);
+        let fp = path.join(__dirname + '/../public/', rpath);
         if (await fs.exists(fp)) {
             ctx.response.type = mime.lookup(rpath);
             ctx.response.body = await fs.readFile(fp);
@@ -19,6 +19,8 @@ function getPages(pagename) {
 
 module.exports = {
     'GET /': getPages('index.html'),
-    'GET /index.html': getPages('index.html')
+    'GET /index.html': getPages('index.html'),
+    'GET /chart.html': getPages('chart.html'),
+    'GET /panel.html': getPages('panel.html')
 };
 

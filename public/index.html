@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SNA4Slack - A social network analysis solution for archive in slack</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="static/css/bootstrap.css" crossorigin="anonymous">
+    <!-- link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" -->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="static/js/jquery-3.2.1.js" crossorigin="anonymous"></script>
+    <script src="static/js/popper.js" crossorigin="anonymous"></script>
+    <script src="static/js/bootstrap.js" crossorigin="anonymous"></script>
+
+    <style>
+        .col-center-block {
+            float: none;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row myCenter">
+            <div class="col-xs-6 col-md-4 col-center-block">
+                <form class="form-signin" action="panel.html" method="GET">
+                    <div style="text-align: center;">
+                        <img src="static/img/logo-logo_noalpha.png" alt="SNA4Slack-logo" style="width:100px;margin-top:180px;">
+                        <img src="static/img/cross.png" alt="cross" style="width:40px;margin-top: 180px;margin-left:20px;margin-right:20px;">
+                        <img src="static/img/slack-logo.png" alt="slack-logo" style="width:95px;margin-top: 170px;">
+                    </div>
+                    <h1 class="form-signin-heading" style="margin-bottom: 10px;margin-top: 20px;text-align: center;">
+                        <b>SNA4Slack</b>
+                    </h1>
+                    <p style="margin-bottom: 10px;text-align: center;margin-top:20px"> Find an existing workspace and start to explore.</p>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="domain" placeholder="example.slackarchive.io" required autofocus>
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="buttom" value="submit">Continue</button>
+                        </span>
+                    </div>
+                    <!--<div class="checkbox" style="margin-bottom: 10px;margin-top: 10px;">
+                    <label>
+                        <input type="checkbox" value="remember-domain">
+                        Remember
+                    </label>
+                </div>-->
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
