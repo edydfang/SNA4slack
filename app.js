@@ -41,7 +41,7 @@ app.use(rest.restify());
 app.use(controller());
 
 // if not used by REST or controller, then static
-app.use(staticFiles('/', __dirname + '/static'));
+//app.use(staticFiles('/', __dirname + '/static'));
 
 let port = process.env.PORT || 3000;
 app.listen(port);
