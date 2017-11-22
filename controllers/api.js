@@ -72,14 +72,17 @@ function digest_messages(original, size, offset) {
                 newobj.messages.push(m);
             }
             newobj.related = {};
+            newobj.users = [];
             for (var id in oriobj.related.users) {
                 var user = oriobj.related.users[id];
+                newobj.users.push(id);
                 var u = {};
                 u.name = user.name;
                 u.color = user.color;
                 u.firstname = user.profile.first_name;
                 u.lastname = user.profile.last_name;
                 u.realname = user.profile.real_name;
+                u.avatar = user.profile.image_48;
                 newobj.related[id] = u;
             }
         }
