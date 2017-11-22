@@ -20,7 +20,6 @@ app.use(async (ctx, next) => {
 
 // static file support:
 //if (! isProduction) {
-console.log("In production env now!")
 let staticFiles = require('./static-files');
 app.use(staticFiles('/static/', __dirname + '/static'));
 //}
@@ -34,11 +33,15 @@ app.use(templating('views', {
     watch: !isProduction
 }));
 
+
 // bind .rest() for ctx:
 app.use(rest.restify());
 
 // add controller:
 app.use(controller());
+
+// if not used by REST or controller, then static
+app.use(staticFiles('/', __dirname + '/static'));
 
 let port = process.env.PORT || 3000;
 app.listen(port);
