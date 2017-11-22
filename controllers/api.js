@@ -2,6 +2,7 @@
 //var https = require('https');
 let rp = require("request-promise");
 let debug = require('debug')('slack-diagram:api');
+const APIError = require('../rest').APIError;
 //let qs = require("qs");
 
 function digest_group(original) {
@@ -98,10 +99,11 @@ let get_group_info = async (ctx, next) => {
         result = await rp(options);
     } catch (err) {
         debug(err);
+        throw APIError('query failed');
     } finally {
         debug(result);
     }
-    ctx.response.body = digest_group(result);
+    ctx.rest(digest_group(result))
 };
 
 /* GET group channels. */
@@ -116,10 +118,11 @@ let get_channels = async (ctx, next) => {
         result = await rp(options);
     } catch (err) {
         debug(err);
+        throw APIError('query failed');
     } finally {
         debug(result);
     }
-    ctx.response.body = digest_channels(result);
+    ctx.rest(digest_channels(result))
 };
 
 /* GET messages. */
@@ -141,14 +144,15 @@ let get_messages  = async (ctx, next) => {
         result = await rp(options);
     } catch (err) {
         debug(err);
+        throw APIError('query failed');
     } finally {
         debug(result);
     }
-    ctx.response.body = digest_messages(result, size, offset);
+    ctx.rest(digest_messages(result, size, offset));
 };
 
 module.exports = {
-    'GET /group': get_group_info,
-    'GET /channels': get_channels,
-    'GET /messages': get_messages,
+    'GET /api/group': get_group_info,
+    'GET /api/channels': get_channels,
+    'GET /api/messages': get_messages,
 };
