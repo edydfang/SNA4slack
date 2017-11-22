@@ -154,8 +154,39 @@ let get_messages  = async (ctx, next) => {
     ctx.rest(digest_messages(result, size, offset));
 };
 
+/* Image proxy. */
+let get_image  = async (ctx, next) => {
+    var proxyurl = ctx.originalUrl.replace('/api/image?', '');
+    console.log(proxyurl);
+    let options = {
+        uri: proxyurl,
+        encoding: null,
+        headers: { 'referer': 'https://slackarchive.io/' }
+    };
+    let result;
+    try {
+        result = await rp(options);
+        ctx.body = result;
+        var type = 'image/png';
+        if(proxyurl.includes('.png')) {
+            type = 'image/png'
+        } else if(proxyurl.includes('.jpg')) {
+            type = 'image/jpeg'
+        } else if(proxyurl.includes('.gif')) {
+            type = 'image/gif'
+        }
+        ctx.set('Content-Type', type);
+    } catch (err) {
+        debug(err);
+        throw APIError('query failed');
+    } finally {
+        debug(result);
+    }
+};
+
 module.exports = {
     'GET /api/group': get_group_info,
     'GET /api/channels': get_channels,
     'GET /api/messages': get_messages,
+    'GET /api/image': get_image
 };

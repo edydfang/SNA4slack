@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 data: {
                     id: id,
                     name: user.name,
-                    image: user.avatar
+                    image: 'http://localhost:3000/api/image?' + user.avatar
                 }
             });
         }
