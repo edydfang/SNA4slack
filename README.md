@@ -10,7 +10,7 @@ It obtains data from [SlackArchive](http://slackarchive.io/).
 
 - [WebStorm](https://www.jetbrains.com/webstorm/) recommended.
 - VSCode
-- ECM 2017 Standard
+- ECM 2015 Standard
 
 ## Installation
 Make sure you have installed [node.js](https://nodejs.org/).
@@ -21,22 +21,24 @@ Make sure you have installed [node.js](https://nodejs.org/).
 Run the following commands:
 ```sh
 git clone https://github.com/imxieyi/slack-diagram.git
-cd slack-diagram
+# for front end
+cd slack-diagram/front-end
 npm install
-node server.js
+node run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in the browser.
+Open [http://localhost:9528](http://localhost:9528) in the browser.
 
 ## TO-DOs
- - [x] Digest chunky json response from SlackArchive api
- - [x] Index page
- - [x] Raw page design
- - [ ] Input-dependent button color
- - [ ] Auto-complete
- - [ ] Animation effect
+ - [x] Entry Page Design
+ - [x] Back End Basic API
+ - [x] Dashboard Framwork
+ - [ ] Dashborad Details
+ - [ ] Network Graph Rendering
+ - [ ] Deep Analysis for the SNA
  - [ ] Channel selection panel
- - [ ] Date span selection
+ - [ ] Date Filter
  - [ ] Network graph
  - [ ] Member details panel
  - [ ] Relationship details panel
+ - [ ] Report Export
