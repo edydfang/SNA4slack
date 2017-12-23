@@ -2,6 +2,8 @@
 A project for [SNA4Slack](http://score-contest.org/2018/projects/sna4slack.php).
 It obtains data from [SlackArchive](http://slackarchive.io/).
 
+The back end source is located at [imxieyi/SlackDiagramServer](https://github.com/imxieyi/SlackDiagramServer)
+
 ## Online Demo
 
 [SNA4Slack](https://sna4slack.herokuapp.com)
