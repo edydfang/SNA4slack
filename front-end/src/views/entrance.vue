@@ -19,7 +19,7 @@
             </el-col>
         </el-row>
         <el-row  type="flex" justify="center">
-            <h1 class="title">SNA4Slack</h1>
+            <h1 class="title is-1">SNA4Slack</h1>
         </el-row>
         <el-row  type="flex" justify="center">
             <p id="tips">Find an existing workspace and start to explore.</p>
@@ -34,9 +34,14 @@
                 </div>
             </el-col>
         </el-row>
+        <el-row type="flex" justify="center">
+            <div class="box" id="allteams"><h3 class="title is-4">All available teams: </h3>
+                <span v-if="all_teams" v-for="team in all_teams" class="tag available-team"> {{ team.domain  }} </span>
+            </div>
+        </el-row>
     </el-main>
         <el-footer>
-            <el-row :style="{'margin-top':'7em'}" type="flex" justify="center">
+            <el-row :style="{'margin-top':'3em'}" type="flex" justify="center">
                 <el-col :span="24">
                     <hr>
                     <p>Copyright &copy; 2017, SUSTech</p>
@@ -46,42 +51,65 @@
    </el-container>
 </template>
 <script>
-  export default {
-    name: 'entrypage',
-    data() {
-      return {
-        input_slack: '',
-        activeIndex: '1'
-      }
-    },
-    methods: {
-      handleSelect(key, keyPath) {
-        console.log(key, keyPath)
-      },
-      analyze() {
-        // console.log(this.$data.input_slack)
-        this.$store.dispatch('SetSlackName', this.$data.input_slack)
-        this.$router.push('/dashboard')
-      }
+import { get_all_team } from '@/api/slack_data'
+export default {
+  name: 'entrypage',
+  data() {
+    return {
+      input_slack: '',
+      activeIndex: '1',
+      all_teams: null
     }
+  },
+  methods: {
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath)
+      this.activeIndex = key
+    },
+    analyze() {
+      // console.log(this.$data.input_slack)
+      this.$store.dispatch('SetSlackName', this.$data.input_slack)
+      this.$router.push('/dashboard')
+    }
+  },
+  mounted: function() {
+    console.log(this)
+    get_all_team().then(response => {
+      this.all_teams = response.data.team
+      // console.log(typeof(this.all_teams))
+      // this.all_teams = "success"
+    }).catch(error => {
+      console.log(error)
+    })
   }
+}
+
 </script>
 <style>
-    img {
-        width: 100%;
-        height: auto;
-        display: block;
-    }
-    #img-cross {
-        width: 60%;
-        margin-top: 50%;
-        display: flex;
-        margin-left: 15%;
-    }
-    #analyze-button {
-        padding-left: 5%;
-    }
-    p#tips {
-        line-height: 50px;
-    }
+img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+#img-cross {
+  width: 60%;
+  margin-top: 50%;
+  display: flex;
+  margin-left: 15%;
+}
+#analyze-button {
+  padding-left: 5%;
+}
+p#tips {
+  line-height: 50px;
+  font-size: 1.2rem;
+  text-align: center;
+}
+div#allteams {
+  margin-top: 30px;
+}
+.available-team {
+  display: inline-block;
+  margin: auto 5px 10px 5px;
+}
 </style>
