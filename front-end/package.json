@@ -1,21 +1,25 @@
 {
-  "name": "vue-admin-template",
+  "name": "sna4slack",
   "version": "3.0.0",
   "license": "MIT",
-  "description": "A vue admin template with Element UI & axios & iconfont & permission control & lint",
-  "author": "Pan <panfree23@gmail.com>",
+  "description": "An Social Network Analysis Application for Slack",
+  "author": "OOAD Team in SUSTech",
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "start": "npm run dev",
+    "start": "node server.js",
+    "startdev": "npm run dev",
     "build": "node build/build.js",
-    "build:report":"npm_config_report=true node build/build.js",
+    "build:report": "npm_config_report=true node build/build.js",
     "lint": "eslint --ext .js,.vue src",
-    "test": "npm run lint"
+    "test": "npm run lint",
+    "postinstall": "npm install --prefix front-end && npm run build --prefix front-end"
   },
   "dependencies": {
     "axios": "0.17.1",
     "element-ui": "2.0.8",
     "js-cookie": "2.2.0",
+    "koa": "^2.4.1",
+    "koa-static": "^4.0.2",
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "vue": "2.5.10",
@@ -68,8 +72,8 @@
     "webpack-merge": "4.1.1"
   },
   "engines": {
-    "node": ">= 4.0.0",
-    "npm": ">= 3.0.0"
+    "node": ">= 7.6.0",
+    "npm": ">= 5.0.0"
   },
   "browserslist": [
     "> 1%",

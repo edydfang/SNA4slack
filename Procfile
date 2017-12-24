@@ -1,1 +1,1 @@
-web: node app.js
+web: npm run start --prefix front-end
