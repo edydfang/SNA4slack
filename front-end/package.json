@@ -11,8 +11,7 @@
     "build": "node build/build.js",
     "build:report": "npm_config_report=true node build/build.js",
     "lint": "eslint --ext .js,.vue src",
-    "test": "npm run lint",
-    "postinstall": "npm install --prefix front-end && npm run build --prefix front-end"
+    "test": "npm run lint"
   },
   "dependencies": {
     "axios": "0.17.1",
