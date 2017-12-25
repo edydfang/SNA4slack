@@ -1,6 +1,7 @@
 # slack-diagram
 A project for [SNA4Slack](http://score-contest.org/2018/projects/sna4slack.php).
 It obtains data from [SlackArchive](http://slackarchive.io/).
+
 ![build status](https://travis-ci.org/edwardfang/SNA4slack.svg?branch=vue-front-end)
 
 The back end source is located at [imxieyi/SlackDiagramServer](https://github.com/imxieyi/SlackDiagramServer)
