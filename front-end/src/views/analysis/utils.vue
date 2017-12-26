@@ -1,7 +1,8 @@
 <template>
   <div class="app-container">
-     <div class="block">
-        <span class="demonstration card-panel-text" style="font-size:16px">Date:&nbsp&nbsp</span>
+    <el-row  style="margin-bottom: 20px">
+        <el-col :span="15">
+        <span class="demonstration card-panel-text" style="font-size:16px">Date:</span>
         <el-date-picker
           v-model="date"
           type="daterange"
@@ -12,12 +13,13 @@
           end-placeholder="end"
           :picker-options="pickerOptions">
         </el-date-picker>
-        {{date}}
-        {{channel}}
-      </div>
-
+        </el-col>
+        <el-col :span="8">
+        <p id="channel-choice"> <span v-if="isOverview"> Overview </span> <span v-else>Selected Channel {{channel}}</span></p>
+        </el-col>
+    </el-row>
       <el-row>
-        <el-col :span="15" :offset='0'>
+        <el-col :span="15">
           <el-card class="box-card">
             <div slot="header" class="clearfix">
               <span>Graph</span>
@@ -219,7 +221,7 @@
 
 export default {
   name: 'analysis-utils',
-  props: ['channel'],
+  props: ['channel', 'isOverview'],
   data() {
     return {
       type: 'edge',
@@ -266,7 +268,11 @@ export default {
 </script>
 
 <style>
-
+  #channel-choice {
+    line-height: 40px;
+    font-size: 18px;
+    padding-left: 40px;
+  }
   .text {
     font-size: 16px;
     font-family: 'Nunito', sans-serif;
