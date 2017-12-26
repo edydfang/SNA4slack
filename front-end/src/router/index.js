@@ -28,33 +28,32 @@ export const constantRouterMap = [
   {
     path: '/dashboard',
     component: Layout,
-    // redirect: '/dashboard',
+    redirect: '/dashboard/index',
     name: 'Dashboard',
-    hidden: true,
     children: [{
-      path: 'dashboard',
-      component: _import('dashboard/index')
+      path: 'index',
+      component: _import('dashboard/index'),
+      meta: { title: 'Dashboard', icon: 'example' }
     }]
   },
-
   {
-    path: '/example',
+    path: '/channels',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
+    redirect: '/channels/team-overview',
+    name: 'channels',
+    meta: { title: 'Channel Analysis', icon: 'example' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
+        path: '',
+        name: 'overview',
         component: _import('table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        meta: { title: 'Team overview', icon: 'table' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
+        path: 'channeldemo',
+        name: 'channeldemo',
         component: _import('tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        meta: { title: 'channeldemo', icon: 'tree' }
       }
     ]
   },

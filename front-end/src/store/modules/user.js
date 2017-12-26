@@ -4,9 +4,9 @@ import { getToken, setToken, removeToken } from '@/utils/auth'
 const user = {
   state: {
     token: getToken(),
-    name: '',
+    name: 'Guest',
     avatar: '/static/avatar.gif',
-    roles: []
+    roles: ['guest']
   },
 
   mutations: {
