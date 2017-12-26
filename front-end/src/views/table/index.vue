@@ -23,13 +23,13 @@
               <el-button style="float: right; padding: 3px " type="text"  v-on:click="changeType()">操作按钮</el-button>
             </div>
             <div>
-              <img src="../../assets/graph.jpg" height="600" >
+              <img src="../../assets/graph.jpg" style="width:60%" >
             </div>
           </el-card>
         </el-col>
 
         <el-col :span="8" class='margin'>
-          <el-card v-if="type === 'edge'" class="box-card">
+          <el-card v-if="type === 'edge'" class="box-card2">
             <div slot="header" class="clearfix">
               <span>Info-edge</span>
             </div>
@@ -61,10 +61,42 @@
                   <span>153 days</span>
                 </div>
               </el-row>
+              <div class='chat-div' >
+                <article class="media" >
+                <figure class="media-right" >
+                  <p class="image is-64x64">
+                    <img src="../../assets/friends.svg"  class="admin">
+                  </p>
+                </figure>
+                <div class="media-content" >
+                  <div class="content content-left" >
+                    <p>
+                      <br>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
+                    </p>
+                  </div>
+                </div>
+              </article>
+              <article class="media" >
+                <div class="media-content content-right">
+                  <div class="content">
+                    <p>
+                      <br>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
+                    </p>
+                  </div>
+                </div>
+                <figure class="media-right"  >
+                  <p class="image is-64x64">
+                    <img src="../../assets/friends.svg"  class="admin">
+                  </p>
+                </figure>
+              </article>
+              </div>
             </div>
               
           </el-card>
-          <el-card v-if="type === 'node'" class="box-card">
+          <el-card v-if="type === 'node'" class="box-card2">
             <div slot="header" class="clearfix">
               <span>Info-node</span>
             </div>
@@ -96,17 +128,48 @@
                 </div>
               </el-row>
 
-              
+              <div class='chat-div' >
+              <article class="media" >
+                <figure class="media-right" >
+                  <p class="image is-64x64">
+                    <img src="../../assets/friends.svg"  class="admin">
+                  </p>
+                </figure>
+                <div class="media-content" >
+                  <div class="content content-left" >
+                    <p>
+                      <br>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
+                    </p>
+                  </div>
+                </div>
+              </article>  
+              <article class="media" >
+                <figure class="media-right" >
+                  <p class="image is-64x64">
+                    <img src="../../assets/friends.svg"  class="admin">
+                  </p>
+                </figure>
+                <div class="media-content" >
+                  <div class="content content-left" >
+                    <p>
+                      <br>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
+                    </p>
+                  </div>
+                </div>
+              </article>  
+            </div>  
             </div>
           </el-card>
         </el-col>
       </el-row>
 
-      <el-row style="margin-top:2%">
+      <el-row style="margin-top:1%">
         <el-col :span="5" >
           <el-card  class='tag-card'>
             <el-col :span="14" >
-              <img src="../../assets/friends.svg" height="60"  style="padding:7px">
+              <img src="../../assets/friends.svg" class="tag-img">
             </el-col>
             <el-col :span="10" >
               <div class='card-panel-text'>Accounts</div>
@@ -117,7 +180,7 @@
         <el-col :span="5" class='margin2'>
           <el-card class='tag-card'>
               <el-col :span="14" >
-              <img src="../../assets/message.svg" height="60"  style="padding:7px">
+              <img src="../../assets/message.svg" class="tag-img">
             </el-col>
             <el-col :span="10" class=''>
               <div class='card-panel-text'>Messages</div>
@@ -128,7 +191,7 @@
         <el-col :span="5" class='margin2'>
           <el-card class='tag-card'>
               <el-col :span="14" >
-              <img src="../../assets/at.svg" height="60"  style="padding:7px">
+              <img src="../../assets/at.svg" height="60"  class="tag-img">
             </el-col>
             <el-col :span="10" class=''>
               <div class='card-panel-text'>Relations</div>
@@ -139,7 +202,7 @@
         <el-col :span="5" class='margin2'>
           <el-card class='tag-card'>
               <el-col :span="14" >
-              <img src="../../assets/date.svg" height="60"  style="padding:8px">
+              <img src="../../assets/date.svg" height="60"  class="tag-img">
             </el-col>
             <el-col :span="10" class=''>
              <div class='card-panel-text'>Created</div>
@@ -209,7 +272,7 @@ export default {
     color:#304156;
   }
   .item {
-    margin-bottom: 8%;
+    margin-bottom: 4%;
   }
 
   .clearfix:before,
@@ -243,13 +306,22 @@ export default {
 
 }
 .box-card {
-    position: relative;
-    height: 680px;
+    height: 0px;
+    padding-bottom: 70%;
+  }
+  .box-card2 {
+    height: 0px;
+    padding-bottom: 131%;
   }
 .tag-card
 {
   position: relative;
-  height: 100px;
+  height:100px;
+}
+.tag-img{
+  width:40%; 
+  padding:6px;
+  margin-bottom: 5%;
 }
 
 .admin {
@@ -281,6 +353,29 @@ export default {
 .addline{
   border-bottom: 2px solid #ebeef5;
   margin-bottom: 5%;
+}
+
+.chat-div{
+  height:0px;
+  width:95%;
+  padding-bottom:43%;
+  float:left; 
+  overflow-y:scroll;
+  margin-right: 5%;
+}
+
+.content-left{
+  margin-right: 10%;
+  width: 90%;
+}
+.content-right{
+  margin-left: 10%;
+  width: 90%;
+}
+.media+.media {
+    margin-top: 0px;
+    padding-top: 0px;
+    border-top: 0px;
 }
 
 
