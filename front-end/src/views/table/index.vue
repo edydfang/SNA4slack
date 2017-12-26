@@ -16,7 +16,6 @@
       </div>
 
       <el-row>
-
         <el-col :span="15" :offset='0'>
           <el-card class="box-card">
             <div slot="header" class="clearfix">
@@ -65,8 +64,6 @@
         </el-col>
       </el-row>
 
-
-
       <el-row style="margin-top:2%">
         <el-col :span="5" >
           <el-card  class='tag-card'>
@@ -96,8 +93,8 @@
               <img src="../../assets/at.svg" height="60"  style="padding:7px">
             </el-col>
             <el-col :span="10" class=''>
-              <div class='card-panel-text'>Stars</div>
-              <span class='card-panel-num'>{{star}}</span>
+              <div class='card-panel-text'>Relationship</div>
+              <span class='card-panel-num'>{{at}}</span>
             </el-col>
           </el-card>
         </el-col>
@@ -115,79 +112,68 @@
 
       </el-row>
   </div>
-
   </div>
-
-
 </template>
-
 <script>
-
 
 export default {
 
   data() {
     return {
-      type : 'edge',
-      account:1000,
-      message:500,
-      star:88,
-      created:'2017.9',
+      type: 'edge',
+      account: 1000,
+      message: 500,
+      at: 88,
+      created: '2017.9',
       date: '',
       pickerOptions2: {
         shortcuts: [{
           text: '最近一周',
           onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-            picker.$emit('pick', [start, end]);
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+            picker.$emit('pick', [start, end])
           }
         }, {
           text: '最近一个月',
           onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-            picker.$emit('pick', [start, end]);
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+            picker.$emit('pick', [start, end])
           }
         }, {
           text: '最近三个月',
           onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-            picker.$emit('pick', [start, end]);
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+            picker.$emit('pick', [start, end])
           }
         }]
       }
-      
-    };
+    }
   },
 
-  methods:{
-            changeType: function (){
-              if(this.type=='edge'){
-                this.type = 'node'
-              }else{
-                this.type = 'edge'
-              }
-                
-              
-            }
-          }
+  methods: {
+    changeType: function() {
+      if (this.type === 'edge') {
+        this.type = 'node'
+      } else {
+        this.type = 'edge'
+      }
+    }
+  }
 
 }
 </script>
-
 
 <style>
 
   .text {
     font-size: 14px;
   }
-
-
 
   .clearfix:before,
   .clearfix:after {
@@ -198,7 +184,7 @@ export default {
     clear: both
   }
 
-    .margin {
+  .margin {
     margin-left: 2%;
   }
   .margin2 {
@@ -211,7 +197,7 @@ export default {
     margin-bottom: 6px;
     font-weight:bold;
     font-family: 'Mukta Malar', sans-serif;
-}
+  }
 .card-panel-num {
     font-size: 20px;
     font-weight: bold;
