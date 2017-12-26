@@ -10,9 +10,10 @@
           range-separator="to "
           start-placeholder="start"
           end-placeholder="end"
-          :picker-options="pickerOptions2">
+          :picker-options="pickerOptions">
         </el-date-picker>
         {{date}}
+        {{channel}}
       </div>
 
       <el-row>
@@ -46,17 +47,17 @@
               </el-row>
               <el-row class='addline' style="margin-left:5%; margin-right:5%">
                 <div class="text item">
-                  <svg-icon icon-class="goodfriends" /> 
+                  <svg-icon icon-class="goodfriends" />
                   <span style='margin-left:3%'>Intimate Degree:</span>
                   <span>80%</span>
                 </div>
                 <div class="text item">
-                  <svg-icon icon-class="smell" /> 
+                  <svg-icon icon-class="smell" />
                   <span style='margin-left:3%'>Emotional Analysis:</span>
                   <span>80%</span>
                 </div>
                 <div class="text item">
-                  <svg-icon icon-class="date" /> 
+                  <svg-icon icon-class="date" />
                   <span style='margin-left:3%'>Meet Days:</span>
                   <span>153 days</span>
                 </div>
@@ -94,7 +95,6 @@
               </article>
               </div>
             </div>
-              
           </el-card>
           <el-card v-if="type === 'node'" class="box-card2">
             <div slot="header" class="clearfix">
@@ -143,7 +143,7 @@
                     </p>
                   </div>
                 </div>
-              </article>  
+              </article>
               <article class="media" >
                 <figure class="media-right" >
                   <p class="image is-64x64">
@@ -158,8 +158,8 @@
                     </p>
                   </div>
                 </div>
-              </article>  
-            </div>  
+              </article>
+            </div>
             </div>
           </el-card>
         </el-col>
@@ -218,7 +218,8 @@
 <script>
 
 export default {
-
+  name: 'analysis-utils',
+  props: ['channel'],
   data() {
     return {
       type: 'edge',
@@ -229,7 +230,7 @@ export default {
       date: '',
       admin1: 'Fang',
       admin2: 'Xieyi',
-      pickerOptions2: {
+      pickerOptions: {
         shortcuts: [{
           text: 'Latest week',
           onClick(picker) {

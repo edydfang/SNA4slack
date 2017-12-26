@@ -46,7 +46,7 @@ export const constantRouterMap = [
       {
         path: '',
         name: 'overview',
-        component: _import('table/index'),
+        component: _import('analysis/overview'),
         meta: { title: 'Team overview', icon: 'table' }
       },
       {
