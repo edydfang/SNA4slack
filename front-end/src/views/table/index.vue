@@ -37,10 +37,29 @@
               <el-row class='addline'>
                 <el-col :span="12" >
                   <img src="../../assets/friends.svg"  class="admin">
+                  <div class="admin-name">{{admin1}}</div>
                 </el-col>
                 <el-col :span="12" >
                   <img src="../../assets/friends.svg"  class="admin">
+                  <div class="admin-name">{{admin2}}</div>
                 </el-col>
+              </el-row>
+              <el-row class='addline' style="margin-left:5%; margin-right:5%">
+                <div class="text item">
+                  <svg-icon icon-class="goodfriends" /> 
+                  <span style='margin-left:3%'>Intimate Degree:</span>
+                  <span>80%</span>
+                </div>
+                <div class="text item">
+                  <svg-icon icon-class="smell" /> 
+                  <span style='margin-left:3%'>Emotional Analysis:</span>
+                  <span>80%</span>
+                </div>
+                <div class="text item">
+                  <svg-icon icon-class="date" /> 
+                  <span style='margin-left:3%'>Meet Days:</span>
+                  <span>153 days</span>
+                </div>
               </el-row>
             </div>
               
@@ -52,12 +71,31 @@
             <div>
               <el-row class='addline'>
                 <el-col :span="6" >
-                  <img src="../../assets/friends.svg"  class="admin2">
+                  <img src="../../assets/friends.svg"  class="admin2"><span>&nbsp</span>
                 </el-col>
                 <el-col :span="10" :offset='3'>
-                  相关信息
+                  <div class="admin-name" style="text-align:left">{{admin1}}</div>
+                  <div class="text" style="text-align:left">sustech.......</div>
                 </el-col>
               </el-row>
+              <el-row class='addline' style="margin-left:5%; margin-right:5%">
+                <div class="text item">
+                  <svg-icon icon-class="activity" /> 
+                  <span style='margin-left:3%'>Activity Degree:</span>
+                  <span>80%</span>
+                </div>
+                <div class="text item">
+                  <svg-icon icon-class="smell" /> 
+                  <span style='margin-left:3%'>Emotional Analysis:</span>
+                  <span>80%</span>
+                </div>
+                <div class="text item">
+                  <svg-icon icon-class="date" /> 
+                  <span style='margin-left:3%'>Meet Days:</span>
+                  <span>153 days</span>
+                </div>
+              </el-row>
+
               
             </div>
           </el-card>
@@ -93,7 +131,7 @@
               <img src="../../assets/at.svg" height="60"  style="padding:7px">
             </el-col>
             <el-col :span="10" class=''>
-              <div class='card-panel-text'>Relationship</div>
+              <div class='card-panel-text'>Relations</div>
               <span class='card-panel-num'>{{at}}</span>
             </el-col>
           </el-card>
@@ -126,9 +164,11 @@ export default {
       at: 88,
       created: '2017.9',
       date: '',
+      admin1: 'Fang',
+      admin2: 'Xieyi',
       pickerOptions2: {
         shortcuts: [{
-          text: '最近一周',
+          text: 'Latest week',
           onClick(picker) {
             const end = new Date()
             const start = new Date()
@@ -136,19 +176,11 @@ export default {
             picker.$emit('pick', [start, end])
           }
         }, {
-          text: '最近一个月',
+          text: 'Latest month',
           onClick(picker) {
             const end = new Date()
             const start = new Date()
             start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-            picker.$emit('pick', [start, end])
-          }
-        }, {
-          text: '最近三个月',
-          onClick(picker) {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
             picker.$emit('pick', [start, end])
           }
         }]
@@ -172,7 +204,12 @@ export default {
 <style>
 
   .text {
-    font-size: 14px;
+    font-size: 16px;
+    font-family: 'Nunito', sans-serif;
+    color:#304156;
+  }
+  .item {
+    margin-bottom: 8%;
   }
 
   .clearfix:before,
@@ -198,7 +235,7 @@ export default {
     font-weight:bold;
     font-family: 'Mukta Malar', sans-serif;
   }
-.card-panel-num {
+.card-panel-num{
     font-size: 20px;
     font-weight: bold;
     color:#666;
@@ -219,24 +256,32 @@ export default {
   padding:1%;
   margin-left: 25%; 
   margin-top: 5%;
-  margin-bottom: 5%;
   width: 45%;
   border-radius: 50%;
   border: 3px solid #eee;
-   overflow: hidden;
+  overflow: hidden;
 }
 .admin2 {
   padding:1%;
   margin-left: 6%; 
   margin-top: 5%; 
-  margin-bottom: 5%;
+  border-bottom-right-radius: 5px;
   width: 100%;
   border-radius: 50%;
   border: 3px solid #eee;
-   overflow: hidden;
+  overflow: hidden;
+}
+.admin-name{
+  margin-bottom: 3px;
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.45);
+  font-family: 'Nunito', sans-serif;
+  text-align: center;
 }
 .addline{
   border-bottom: 2px solid #ebeef5;
+  margin-bottom: 5%;
 }
+
 
 </style>
