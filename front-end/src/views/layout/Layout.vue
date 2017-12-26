@@ -3,7 +3,6 @@
     <sidebar class="sidebar-container"></sidebar>
     <div class="main-container">
       <navbar></navbar>
-      <div class="box"><p>The chosen Slack site is {{slack_name}}.</p></div>
       <app-main></app-main>
     </div>
   </div>
