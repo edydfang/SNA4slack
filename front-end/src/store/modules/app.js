@@ -5,7 +5,7 @@ const app = {
     sidebar: {
       opened: !+Cookies.get('sidebarStatus')
     },
-    menu_items: null
+    menu_items: Cookies.getJSON('menu_items')
   },
   mutations: {
     TOGGLE_SIDEBAR: state => {
@@ -15,18 +15,11 @@ const app = {
         Cookies.set('sidebarStatus', 0)
       }
       state.sidebar.opened = !state.sidebar.opened
-    },
-    UPDATE_MENU: (state, menu_items) => {
-      state.menu_items = menu_items
     }
   },
   actions: {
     ToggleSideBar: ({ commit }) => {
       commit('TOGGLE_SIDEBAR')
-    },
-    UpdateMenu: ({ commit }, teaminfo) => {
-      // const original_router = this.$router.options.routes.slice()
-      // commit('UPDATE_MENU', menu_items)
     }
   }
 }

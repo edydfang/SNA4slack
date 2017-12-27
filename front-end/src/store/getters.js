@@ -5,6 +5,7 @@ const getters = {
   name: state => state.user.name,
   roles: state => state.user.roles,
   team_info: state => state.slack.team_info,
-  channel_list: state => state.slack.channel_list
+  channel_list: state => state.slack.channel_list,
+  menu_items: state => state.app.menu_items
 }
 export default getters

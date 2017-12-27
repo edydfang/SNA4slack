@@ -3,8 +3,8 @@ import { get_team_info, get_channel_list } from '@/api/slack_data'
 
 const slack = {
   state: {
-    team_info: Cookies.get('team_info'),
-    channel_list: null
+    team_info: Cookies.getJSON('team_info'),
+    channel_list: Cookies.getJSON('channel_list')
   },
   mutations: {
     SET_SLACK_INFO: (state, team_info) => {
@@ -30,10 +30,12 @@ const slack = {
         })
       })
     },
-    UpdateChannelList: ({ commit }, teamid) => {
+    UpdateChannelList: ({ dispatch, commit }, teamid) => {
       return new Promise((resolve, reject) => {
         get_channel_list(teamid).then(response => {
           const data = response.data.channel
+          // console.log('UpdateChannelList')
+          Cookies.set('channel_list', data)
           commit('SET_CHANNEL_LIST', data)
           // console.log(data)
           resolve()

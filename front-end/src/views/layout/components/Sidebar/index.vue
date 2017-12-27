@@ -10,20 +10,25 @@
 import { mapGetters } from 'vuex'
 import SidebarItem from './SidebarItem'
 import ScrollBar from '@/components/ScrollBar'
+import { constantRouterMap } from '@/router'
 
 export default {
   components: { SidebarItem, ScrollBar },
   computed: {
     ...mapGetters([
-      'sidebar'
+      'sidebar',
+      'channel_list'
     ]),
     routes() {
-      // need to use store to prevent duplication
-      const original_router = this.$router.options.routes.slice()
-      const new_item = { path: 'demochannel', hidden: false, meta: { title: 'demotitle' }}
-      console.log(original_router)
-      original_router[4].children.push(new_item)
-      return original_router
+      const menu_items = JSON.parse(JSON.stringify(constantRouterMap))
+      // console.log(menu_items)
+      const channel_list = this.channel_list
+      for (let i = 0; i < channel_list.length; i++) {
+        // console.log(channel_list[i])
+        const new_item = { path: channel_list[i].name, hidden: false, meta: { title: channel_list[i].name }}
+        menu_items[4].children.push(new_item)
+      }
+      return menu_items
     },
     isCollapse() {
       return !this.sidebar.opened
