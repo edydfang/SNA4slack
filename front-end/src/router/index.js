@@ -39,21 +39,22 @@ export const constantRouterMap = [
   {
     path: '/channels',
     component: Layout,
-    redirect: '/channels/team-overview',
+    redirect: '/channels/mixed-channel',
     name: 'channels',
     meta: { title: 'Channel Analysis', icon: 'example' },
     children: [
       {
-        path: '',
-        name: 'overview',
+        path: 'mixed-channel',
+        name: 'mixed-channel',
         component: _import('analysis/overview'),
-        meta: { title: 'Team overview', icon: 'table' }
+        meta: { title: 'Mixed Channels', icon: 'table' }
       },
       {
-        path: 'channeldemo',
+        path: ':channelname',
         name: 'channeldemo',
-        component: _import('tree/index'),
-        meta: { title: 'channeldemo', icon: 'tree' }
+        hidden: true,
+        component: _import('analysis/single_channel'),
+        props: true
       }
     ]
   },

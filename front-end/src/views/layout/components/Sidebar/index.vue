@@ -18,7 +18,12 @@ export default {
       'sidebar'
     ]),
     routes() {
-      return this.$router.options.routes
+      // need to use store to prevent duplication
+      const original_router = this.$router.options.routes.slice()
+      const new_item = { path: 'demochannel', hidden: false, meta: { title: 'demotitle' }}
+      console.log(original_router)
+      original_router[4].children.push(new_item)
+      return original_router
     },
     isCollapse() {
       return !this.sidebar.opened
