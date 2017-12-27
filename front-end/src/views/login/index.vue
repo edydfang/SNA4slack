@@ -71,6 +71,7 @@ export default {
       }
     },
     handleLogin() {
+      // console.log('invoked')
       // console.log(this.$refs.loginForm.validate)
       this.$refs.loginForm.validate(valid => {
         if (valid) {

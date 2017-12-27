@@ -23,6 +23,18 @@ export function get_channel_list(teamid) {
   })
 }
 
-export function get_mention_info() {
-  return
+export function get_team_user(teamid) {
+  return request({
+    url: 'api/user/all',
+    method: 'get',
+    params: { team: teamid }
+  })
+}
+
+export function get_mention_info(teamid, channelid, start, end) {
+  return request({
+    url: 'api/mention',
+    method: 'get',
+    params: { team: teamid, channel: channelid, from: start, to: end }
+  })
 }

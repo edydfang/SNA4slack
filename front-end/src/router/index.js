@@ -50,8 +50,8 @@ export const constantRouterMap = [
         meta: { title: 'Mixed Channels', icon: 'table' }
       },
       {
-        path: ':channelname',
-        name: 'channeldemo',
+        path: ':channelId',
+        name: 'channelSingle',
         hidden: true,
         component: _import('analysis/single_channel'),
         props: true

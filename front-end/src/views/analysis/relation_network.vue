@@ -4,12 +4,36 @@
 </template>
 <script>
 import D3Network from 'vue-d3-network'
+import { get_mention_info } from '@/api/slack_data'
+
+var extract_nodes = (data) => {
+  let nodes = new Set()
+  for (var i = data.length - 1; i >= 0; i--) {
+    nodes.add(data[i].to_user)
+    nodes.add(data[i].from_user)
+  }
+  // process user related info
+  nodes = Array.from(nodes).map(idx => { return { id: idx } })
+  // console.log(nodes)
+  return nodes
+}
+
+var extract_links = (data) => {
+  const links = []
+  for (var i = data.length - 1; i >= 0; i--) {
+    links.push({ sid: data[i].from_user, tid: data[i].to_user, _color: 'orange' })
+  }
+  // console.log(links)
+  return links
+}
+
 export default {
   name: 'network',
+  props: ['nodesData', 'linksData', 'teamId'],
   data() {
     return {
       nodes: [
-        { id: 1, name: 'my node 1' },
+        { id: 'abc', name: 'my node 1' },
         { id: 2, name: 'my node 2' },
         { id: 3, _color: 'orange' },
         { id: 4 },
@@ -20,7 +44,7 @@ export default {
         { id: 9 }
       ],
       links: [
-        { sid: 1, tid: 2, _color: 'red' },
+        { sid: 'abc', tid: 2, _color: 'red' },
         { sid: 2, tid: 8, _color: 'f0f' },
         { sid: 3, tid: 4, _color: 'rebeccapurple' },
         { sid: 4, tid: 5 },
@@ -39,6 +63,20 @@ export default {
       }
     }
   },
-  components: { D3Network }
+  components: { D3Network },
+  created() {
+    const params = {
+      teamId: this.teamId,
+      channelId: this.channelId
+    }
+    console.log(params.teamId)
+    get_mention_info().then(responce => {
+      // console.log(responce)
+      const nodes = extract_nodes(responce.data.mention)
+      const links = extract_links(responce.data.mention)
+      this.nodes = nodes
+      this.links = links
+    })
+  }
 }
 </script>

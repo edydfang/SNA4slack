@@ -1,6 +1,18 @@
 import Cookies from 'js-cookie'
 import { get_team_info, get_channel_list } from '@/api/slack_data'
 
+const extract_channel_list = channelArray => {
+  const channelObj = {}
+  // console.log(channelArray)
+  for (var i = channelArray.length - 1; i >= 0; i--) {
+    const idx = channelArray[i].id
+    channelObj[idx] = channelArray[i]
+    // console.log(channelObj[idx])
+    delete channelObj[idx].id
+  }
+  return channelObj
+}
+
 const slack = {
   state: {
     team_info: Cookies.getJSON('team_info'),
@@ -18,10 +30,11 @@ const slack = {
     SetSlackInfo: ({ dispatch, commit }, domain) => {
       Cookies.remove('team_info')
       const domain_trimed = domain.trim()
+      commit('SET_SLACK_INFO', null)
       return new Promise((resolve, reject) => {
         get_team_info(domain_trimed).then(response => {
           // console.log(response)
-          const data = response.data.team
+          const data = response.data.team[0]
           Cookies.set('team_info', data)
           commit('SET_SLACK_INFO', data)
           dispatch('UpdateChannelList', data.id)
@@ -33,9 +46,11 @@ const slack = {
     },
     UpdateChannelList: ({ dispatch, commit }, teamid) => {
       Cookies.remove('channel_list')
+      commit('SET_CHANNEL_LIST', null)
       return new Promise((resolve, reject) => {
         get_channel_list(teamid).then(response => {
-          const data = response.data.channel
+          let data = response.data.channel
+          data = extract_channel_list(data)
           // console.log('UpdateChannelList')
           Cookies.set('channel_list', data)
           commit('SET_CHANNEL_LIST', data)

@@ -15,7 +15,7 @@
         </el-date-picker>
         </el-col>
         <el-col :span="8">
-        <p id="channel-choice"> <span v-if="isOverview"> Overview </span> <span v-else>Selected Channel {{channel}}</span></p>
+        <p id="channel-choice"> <span v-if="isOverview"> Overview </span> <span v-else>Selected Channel {{channelId}}</span></p>
         </el-col>
     </el-row>
       <el-row>
@@ -26,7 +26,7 @@
               <el-button style="float: right; padding: 3px " type="text"  v-on:click="changeType()">操作按钮</el-button>
             </div>
             <div>
-              <network></network>
+              <network :team-id="this.team_info.id" :channel-id="this.channelId"></network>
               <!--img src="../../assets/graph.jpg" style="width:60%"-->
             </div>
           </el-card>
@@ -219,10 +219,11 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 import Network from './relation_network.vue'
 export default {
   name: 'analysis-utils',
-  props: ['channel', 'isOverview'],
+  props: ['channelId', 'isOverview'],
   components: {
     Network
   },
@@ -257,7 +258,11 @@ export default {
       }
     }
   },
-
+  computed: {
+    ...mapGetters([
+      'team_info'
+    ])
+  },
   methods: {
     changeType: function() {
       if (this.type === 'edge') {

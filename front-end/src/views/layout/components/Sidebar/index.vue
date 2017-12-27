@@ -26,10 +26,12 @@ export default {
         return menu_items
       }
       // console.log(menu_items)
-      const channel_list = this.channel_list
-      for (let i = 0; i < channel_list.length; i++) {
+      const channelList = this.channel_list
+      // console.log(channelList)
+      for (const channelId in channelList) {
         // console.log(channel_list[i])
-        const new_item = { path: channel_list[i].name, hidden: false, meta: { title: channel_list[i].name }}
+        // console.log(channelId)
+        const new_item = { path: channelId, hidden: false, meta: { title: channelList[channelId].name }}
         menu_items[4].children.push(new_item)
       }
       return menu_items

@@ -1,11 +1,11 @@
 <template>
-    <analysis-util :is-overview="false" :channel="channelname">
+    <analysis-util :is-overview="false" :channel-id="channelId">
     </analysis-util>
 </template>
 <script>
 import AnalysisUtil from './utils.vue'
 export default {
-  props: ['channelname'],
+  props: ['channelId'],
   components: { AnalysisUtil }
 }
 </script>
