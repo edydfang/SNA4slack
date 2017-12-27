@@ -68,7 +68,7 @@ export default {
     },
     analyze() {
       // console.log(this.$data.input_slack)
-      this.$store.dispatch('SetSlackName', this.$data.input_slack)
+      this.$store.dispatch('SetSlackInfo', this.input_slack)
       this.$router.push('/dashboard')
     }
   },

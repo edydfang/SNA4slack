@@ -6,3 +6,23 @@ export function get_all_team() {
     method: 'get'
   })
 }
+
+export function get_team_info(domain) {
+  return request({
+    url: 'api/team',
+    method: 'get',
+    params: { domain }
+  })
+}
+
+export function get_channel_list(teamid) {
+  return request({
+    url: 'api/channel',
+    method: 'get',
+    params: { team: teamid }
+  })
+}
+
+export function get_mention_info() {
+  return
+}

@@ -2,7 +2,7 @@
   <div class="dashboard-container">
     <div class="dashboard-text">Welcome, {{name}}!!</div>
     <div class="dashboard-text">role:<span v-for='role in roles' :key='role'>{{role}}</span>
-    <p>Current Chosen Team is {{slack_name}}</p>
+    <p>Current Chosen Team is {{team_info}} {{channel_list}}</p>
     </div>
   </div>
 </template>
@@ -16,7 +16,8 @@ export default {
     ...mapGetters([
       'name',
       'roles',
-      'slack_name'
+      'team_info',
+      'channel_list'
     ])
   }
 }

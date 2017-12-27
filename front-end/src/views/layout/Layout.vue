@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import { Navbar, Sidebar, AppMain } from '@/views/layout/components'
 
 export default {
@@ -20,9 +19,6 @@ export default {
     AppMain
   },
   computed: {
-    ...mapGetters([
-      'slack_name'
-    ]),
     sidebar() {
       return this.$store.state.app.sidebar
     }
