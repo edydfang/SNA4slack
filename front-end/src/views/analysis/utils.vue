@@ -26,7 +26,8 @@
               <el-button style="float: right; padding: 3px " type="text"  v-on:click="changeType()">操作按钮</el-button>
             </div>
             <div>
-              <img src="../../assets/graph.jpg" style="width:60%" >
+              <network></network>
+              <!--img src="../../assets/graph.jpg" style="width:60%"-->
             </div>
           </el-card>
         </el-col>
@@ -218,10 +219,13 @@
   </div>
 </template>
 <script>
-
+import Network from './relation_network.vue'
 export default {
   name: 'analysis-utils',
   props: ['channel', 'isOverview'],
+  components: {
+    Network
+  },
   data() {
     return {
       type: 'edge',

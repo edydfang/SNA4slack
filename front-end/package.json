@@ -22,6 +22,7 @@
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "vue": "2.5.10",
+    "vue-d3-network": "^0.1.24",
     "vue-router": "3.0.1",
     "vuex": "3.0.1"
   },
