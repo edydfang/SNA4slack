@@ -16,6 +16,7 @@ const slack = {
   },
   actions: {
     SetSlackInfo: ({ dispatch, commit }, domain) => {
+      Cookies.remove('team_info')
       const domain_trimed = domain.trim()
       return new Promise((resolve, reject) => {
         get_team_info(domain_trimed).then(response => {
@@ -31,6 +32,7 @@ const slack = {
       })
     },
     UpdateChannelList: ({ dispatch, commit }, teamid) => {
+      Cookies.remove('channel_list')
       return new Promise((resolve, reject) => {
         get_channel_list(teamid).then(response => {
           const data = response.data.channel

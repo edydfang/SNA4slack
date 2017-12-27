@@ -17,10 +17,14 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
-      'channel_list'
+      'channel_list',
+      'team_info'
     ]),
     routes() {
       const menu_items = JSON.parse(JSON.stringify(constantRouterMap))
+      if (!this.channel_list) {
+        return menu_items
+      }
       // console.log(menu_items)
       const channel_list = this.channel_list
       for (let i = 0; i < channel_list.length; i++) {
