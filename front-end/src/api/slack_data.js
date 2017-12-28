@@ -32,9 +32,10 @@ export function get_team_user(teamid) {
 }
 
 export function get_mention_info(teamid, channelid, start, end) {
+  // start and end are Date type
   return request({
     url: 'api/mention',
     method: 'get',
-    params: { team: teamid, channel: channelid, from: start, to: end }
+    params: { team: teamid, channel: channelid, from: Math.floor(start.getTime() / 1000), to: Math.floor(end.getTime() / 1000) }
   })
 }

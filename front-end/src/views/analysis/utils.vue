@@ -11,6 +11,7 @@
           range-separator="to "
           start-placeholder="start"
           end-placeholder="end"
+          :clearable="false"
           :picker-options="pickerOptions">
         </el-date-picker>
         </el-col>
@@ -26,7 +27,11 @@
               <el-button style="float: right; padding: 3px " type="text"  v-on:click="changeType()">操作按钮</el-button>
             </div>
             <div>
-              <network :team-id="this.team_info.id" :channel-id="this.channelId"></network>
+              <network
+                :team-id="this.team_info.id"
+                :channel-id="this.channelId"
+                :date-range="this.date"
+              ></network>
               <!--img src="../../assets/graph.jpg" style="width:60%"-->
             </div>
           </el-card>
@@ -234,7 +239,7 @@ export default {
       message: 500,
       at: 88,
       created: '2017.9',
-      date: '',
+      date: [new Date(2008, 1, 1), new Date()],
       admin1: 'Fang',
       admin2: 'Xieyi',
       pickerOptions: {

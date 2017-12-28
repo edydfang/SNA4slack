@@ -1,5 +1,5 @@
 <template>
-    <d3-network :net-nodes="nodes" :net-links="links" :options="options">
+    <d3-network v-if="ready" :net-nodes="nodes" :net-links="links" :options="options">
     </d3-network>
 </template>
 <script>
@@ -7,6 +7,7 @@ import D3Network from 'vue-d3-network'
 import { get_mention_info } from '@/api/slack_data'
 
 var extract_nodes = (data) => {
+  if (!data) return null
   let nodes = new Set()
   for (var i = data.length - 1; i >= 0; i--) {
     nodes.add(data[i].to_user)
@@ -19,6 +20,7 @@ var extract_nodes = (data) => {
 }
 
 var extract_links = (data) => {
+  if (!data) return null
   const links = []
   for (var i = data.length - 1; i >= 0; i--) {
     links.push({ sid: data[i].from_user, tid: data[i].to_user, _color: 'orange' })
@@ -27,33 +29,20 @@ var extract_links = (data) => {
   return links
 }
 
+var update_rawdata = function(context) {
+  // console.log(context.channelId)
+  // console.log(context.dateRange)
+  get_mention_info(context.teamId, context.channelId, context.dateRange[0], context.dateRange[1]).then(responce => {
+    context.rawdata = responce.data.mention
+  })
+}
+
 export default {
   name: 'network',
-  props: ['nodesData', 'linksData', 'teamId'],
+  props: ['nodesData', 'linksData', 'teamId', 'channelId', 'dateRange'],
   data() {
     return {
-      nodes: [
-        { id: 'abc', name: 'my node 1' },
-        { id: 2, name: 'my node 2' },
-        { id: 3, _color: 'orange' },
-        { id: 4 },
-        { id: 5 },
-        { id: 6 },
-        { id: 7 },
-        { id: 8 },
-        { id: 9 }
-      ],
-      links: [
-        { sid: 'abc', tid: 2, _color: 'red' },
-        { sid: 2, tid: 8, _color: 'f0f' },
-        { sid: 3, tid: 4, _color: 'rebeccapurple' },
-        { sid: 4, tid: 5 },
-        { sid: 5, tid: 6 },
-        { sid: 7, tid: 8 },
-        { sid: 5, tid: 8 },
-        { sid: 3, tid: 8 },
-        { sid: 7, tid: 9 }
-      ],
+      rawdata: null,
       options:
       {
         force: 3000,
@@ -65,18 +54,26 @@ export default {
   },
   components: { D3Network },
   created() {
-    const params = {
-      teamId: this.teamId,
-      channelId: this.channelId
+    update_rawdata(this)
+  },
+  computed: {
+    nodes: function() {
+      return extract_nodes(this.rawdata)
+    },
+    links: function() {
+      return extract_links(this.rawdata)
+    },
+    ready: function() {
+      return this.nodes !== null && this.links !== null
     }
-    console.log(params.teamId)
-    get_mention_info().then(responce => {
-      // console.log(responce)
-      const nodes = extract_nodes(responce.data.mention)
-      const links = extract_links(responce.data.mention)
-      this.nodes = nodes
-      this.links = links
-    })
+  },
+  watch: {
+    dateRange: function() {
+      update_rawdata(this)
+    },
+    channelId: function() {
+      update_rawdata(this)
+    }
   }
 }
 </script>
