@@ -26,7 +26,7 @@
         </el-row>
         <el-row type="flex" justify="center">
             <el-col :span="5" :xs="16">
-                <el-input v-model="input_slack" placeholder="example.slackarchive.io"></el-input>
+                <el-input v-model="input_slack" placeholder="example.slackarchive.io" @keyup.enter.native="analyze"></el-input>
             </el-col>
             <el-col :span="3" :xs="8">
                 <div id="analyze-button">

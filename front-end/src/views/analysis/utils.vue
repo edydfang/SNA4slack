@@ -26,7 +26,7 @@
               <span>Graph</span>
               <el-button style="float: right; padding: 3px " type="text"  v-on:click="changeType()">操作按钮</el-button>
             </div>
-            <div>
+            <div >
               <network
                 :team-id="this.team_info.id"
                 :channel-id="this.channelId"
@@ -330,10 +330,10 @@ export default {
     height: 0px;
     padding-bottom: 70%;
   }
-  .box-card2 {
-    height: 0px;
-    padding-bottom: 131%;
-  }
+.box-card2 {
+  height: 0px;
+  padding-bottom: 131%;
+}
 .tag-card
 {
   position: relative;
