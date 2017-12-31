@@ -1,5 +1,7 @@
 <template>
-    <d3-network v-if="ready" :net-nodes="nodes" :net-links="links" :options="options" @node-click='nodeClick' @link-click='linkClick'>
+    <d3-network v-if="ready" :net-nodes="nodes" :net-links="links" :options="options" :selection="{nodes: selected, links: linkSelected}" @node-click='nodeClick' @link-click='linkClick'>
+      <selection v-if="ready" @action="selectionEvent" :data="selection()">
+      </selection>
     </d3-network>
 </template>
 <script>
@@ -16,11 +18,13 @@ var extract_nodes = (data, userlist) => {
   }
   // process user related info
   nodes = Array.from(nodes).map(idx => {
+    var obj
     if (userlist.hasOwnProperty(idx)) {
-      return { id: idx, name: userlist[idx].name, _color: '#' + userlist[idx].color }
+      obj = { id: idx, name: userlist[idx].name, _color: '#' + userlist[idx].color }
     } else {
-      return { id: idx, name: idx }
+      obj = { id: idx, name: idx }
     }
+    return obj
   })
   console.log(nodes)
   return nodes
@@ -30,7 +34,7 @@ var extract_links = (data) => {
   if (!data) return null
   const links = []
   for (var i = data.length - 1; i >= 0; i--) {
-    links.push({ sid: data[i].from_user, tid: data[i].to_user, _color: 'orange' })
+    links.push({ id: data[i].from_user + '-' + data[i].to_user, sid: data[i].from_user, tid: data[i].to_user, _color: 'orange' })
   }
   // console.log(links)
   return links
@@ -55,7 +59,7 @@ var update_rawdata = function(context) {
 
 export default {
   name: 'network',
-  props: ['nodesData', 'linksData', 'teamId', 'channelId', 'dateRange'],
+  props: ['nodesData', 'linksData', 'teamId', 'channelId', 'dateRange', 'selectedNode'],
   data() {
     return {
       rawdata: null,
@@ -65,7 +69,9 @@ export default {
         nodeSize: 20,
         nodeLabels: true,
         linkWidth: 5
-      }
+      },
+      selected: {},
+      linkSelected: {}
     }
   },
   components: { D3Network },
@@ -80,7 +86,7 @@ export default {
       return extract_links(this.rawdata)
     },
     ready: function() {
-      return this.nodes !== null && this.links !== null
+      return this.nodes !== null && this.links !== null && this.userlist !== null
     }
   },
   watch: {
@@ -89,15 +95,68 @@ export default {
     },
     channelId: function() {
       get_userlist(this)
+    },
+    selectedNode: function() {
+      console.log('gg')
     }
   },
   methods: {
+    selection: function() {
+      return {
+        nodes: this.selected,
+        links: this.linkSelected
+      }
+    },
+    selectionEvent(action, args) {
+      const method = this[action]
+      if (typeof method === 'function') {
+        if (args) method(...args)
+        else method()
+      } else {
+        console.error('Call to undefined method:', action)
+      }
+      this.updateSelection()
+    },
+    selectNodeId: function(id) {
+      for (var i = this.nodes.length - 1; i >= 0; i--) {
+        if (this.nodes[i].id === id) {
+          this.selectNode(this.nodes[i])
+          return
+        }
+      }
+    },
+    selectNode: function(node) {
+      this.selected[node.id] = node
+    },
+    selectLink: function(link) {
+      this.linkSelected[link.id] = link
+    },
+    clearSelection: function() {
+      this.selected = {}
+      this.linkSelected = {}
+    },
     nodeClick: function(evt, node) {
-      console.log(node.name)
+      console.log(node)
+      this.clearSelection()
+      this.selectNode(node)
     },
     linkClick: function(evt, link) {
-      console.log(link.sid, link.tid)
+      console.log(link.id)
+      this.clearSelection()
+      this.selectNodeId(link.sid)
+      this.selectNodeId(link.tid)
+      this.selectLink(link)
     }
   }
 }
 </script>
+<style lang="css">
+  .node.selected {
+    stroke-width: 3;
+    stroke: orange;
+    stroke-opacity: 0.8;
+  }
+  .link.selected {
+    stroke-width: 8;
+  }
+</style>
