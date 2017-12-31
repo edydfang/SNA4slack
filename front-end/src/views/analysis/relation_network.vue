@@ -5,9 +5,9 @@
 <script>
 import D3Network from 'vue-d3-network'
 import { get_mention_info } from '@/api/slack_data'
-// import { get_team_user } from '@/api/slack_data'
+import { get_channel_user } from '@/api/slack_data'
 
-var extract_nodes = (data) => {
+var extract_nodes = (data, userlist) => {
   if (!data) return null
   let nodes = new Set()
   for (var i = data.length - 1; i >= 0; i--) {
@@ -15,7 +15,13 @@ var extract_nodes = (data) => {
     nodes.add(data[i].from_user)
   }
   // process user related info
-  nodes = Array.from(nodes).map(idx => { return { id: idx } })
+  nodes = Array.from(nodes).map(idx => {
+    if (userlist.hasOwnProperty(idx)) {
+      return { id: idx, name: userlist[idx].name }
+    } else {
+      return { id: idx }
+    }
+  })
   console.log(nodes)
   return nodes
 }
@@ -28,6 +34,14 @@ var extract_links = (data) => {
   }
   // console.log(links)
   return links
+}
+
+var get_userlist = function(context) {
+  // console.log(context.channelId)
+  // console.log(context.dateRange)
+  get_channel_user(context.teamId, context.channelId).then(responce => {
+    context.userlist = responce.data
+  })
 }
 
 var update_rawdata = function(context) {
@@ -55,11 +69,12 @@ export default {
   },
   components: { D3Network },
   created() {
+    get_userlist(this)
     update_rawdata(this)
   },
   computed: {
     nodes: function() {
-      return extract_nodes(this.rawdata)
+      return extract_nodes(this.rawdata, this.userlist)
     },
     links: function() {
       return extract_links(this.rawdata)

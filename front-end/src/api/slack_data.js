@@ -25,9 +25,17 @@ export function get_channel_list(teamid) {
 
 export function get_team_user(teamid) {
   return request({
-    url: 'api/user/all',
+    url: 'api/user',
     method: 'get',
     params: { team: teamid }
+  })
+}
+
+export function get_channel_user(teamid, channelid) {
+  return request({
+    url: 'api/user',
+    method: 'get',
+    params: { team: teamid, channel: channelid }
   })
 }
 
