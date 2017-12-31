@@ -88,7 +88,7 @@ export default {
       update_rawdata(this)
     },
     channelId: function() {
-      update_rawdata(this)
+      get_userlist(this)
     }
   }
 }
