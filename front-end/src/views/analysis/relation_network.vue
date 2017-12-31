@@ -41,6 +41,7 @@ var get_userlist = function(context) {
   // console.log(context.dateRange)
   get_channel_user(context.teamId, context.channelId).then(responce => {
     context.userlist = responce.data
+    update_rawdata(context)
   })
 }
 
@@ -70,7 +71,6 @@ export default {
   components: { D3Network },
   created() {
     get_userlist(this)
-    update_rawdata(this)
   },
   computed: {
     nodes: function() {
