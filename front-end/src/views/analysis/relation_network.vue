@@ -5,6 +5,7 @@
 <script>
 import D3Network from 'vue-d3-network'
 import { get_mention_info } from '@/api/slack_data'
+// import { get_team_user } from '@/api/slack_data'
 
 var extract_nodes = (data) => {
   if (!data) return null
@@ -15,7 +16,7 @@ var extract_nodes = (data) => {
   }
   // process user related info
   nodes = Array.from(nodes).map(idx => { return { id: idx } })
-  // console.log(nodes)
+  console.log(nodes)
   return nodes
 }
 
@@ -33,7 +34,7 @@ var update_rawdata = function(context) {
   // console.log(context.channelId)
   // console.log(context.dateRange)
   get_mention_info(context.teamId, context.channelId, context.dateRange[0], context.dateRange[1]).then(responce => {
-    context.rawdata = responce.data.mention
+    context.rawdata = responce.data
   })
 }
 

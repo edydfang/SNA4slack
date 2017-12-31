@@ -75,7 +75,7 @@ export default {
   mounted: function() {
     // console.log(this)
     get_all_team().then(response => {
-      this.all_teams = response.data.team
+      this.all_teams = response.data
       // console.log(typeof(this.all_teams))
       // this.all_teams = "success"
     }).catch(error => {

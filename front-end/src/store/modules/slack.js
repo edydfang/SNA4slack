@@ -34,7 +34,7 @@ const slack = {
       return new Promise((resolve, reject) => {
         get_team_info(domain_trimed).then(response => {
           // console.log(response)
-          const data = response.data.team[0]
+          const data = response.data[0]
           Cookies.set('team_info', data)
           commit('SET_SLACK_INFO', data)
           dispatch('UpdateChannelList', data.id)
@@ -49,9 +49,9 @@ const slack = {
       commit('SET_CHANNEL_LIST', null)
       return new Promise((resolve, reject) => {
         get_channel_list(teamid).then(response => {
-          let data = response.data.channel
+          let data = response.data
           data = extract_channel_list(data)
-          // console.log('UpdateChannelList')
+          console.log('UpdateChannelList')
           Cookies.set('channel_list', data)
           commit('SET_CHANNEL_LIST', data)
           // console.log(data)
