@@ -1,5 +1,5 @@
 <template>
-    <d3-network v-if="ready" :net-nodes="nodes" :net-links="links" :options="options">
+    <d3-network v-if="ready" :net-nodes="nodes" :net-links="links" :options="options" @node-click='nodeClick' @link-click='linkClick'>
     </d3-network>
 </template>
 <script>
@@ -17,9 +17,9 @@ var extract_nodes = (data, userlist) => {
   // process user related info
   nodes = Array.from(nodes).map(idx => {
     if (userlist.hasOwnProperty(idx)) {
-      return { id: idx, name: userlist[idx].name }
+      return { id: idx, name: userlist[idx].name, _color: '#' + userlist[idx].color }
     } else {
-      return { id: idx }
+      return { id: idx, name: idx }
     }
   })
   console.log(nodes)
@@ -89,6 +89,14 @@ export default {
     },
     channelId: function() {
       get_userlist(this)
+    }
+  },
+  methods: {
+    nodeClick: function(evt, node) {
+      console.log(node.name)
+    },
+    linkClick: function(evt, link) {
+      console.log(link.sid, link.tid)
     }
   }
 }
