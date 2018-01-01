@@ -16,7 +16,8 @@ const extract_channel_list = channelArray => {
 const slack = {
   state: {
     team_info: Cookies.getJSON('team_info'),
-    channel_list: Cookies.getJSON('channel_list')
+    channel_list: Cookies.getJSON('channel_list'),
+    selected_info: Cookies.getJSON('selected_info')
   },
   mutations: {
     SET_SLACK_INFO: (state, team_info) => {
@@ -24,6 +25,9 @@ const slack = {
     },
     SET_CHANNEL_LIST: (state, channel_list) => {
       state.channel_list = channel_list
+    },
+    SET_SELECTED_INFO: (state, selected_info) => {
+      state.selected_info = selected_info
     }
   },
   actions: {
@@ -59,6 +63,16 @@ const slack = {
         }).catch(error => {
           reject(error)
         })
+      })
+    },
+    SetSelection: ({ dispatch, commit }, selected) => {
+      Cookies.remove('selected_info')
+      commit('SET_SELECTED_INFO', null)
+      return new Promise((resolve, reject) => {
+        Cookies.set('selected_info', selected)
+        commit('SET_SELECTED_INFO', selected)
+        // console.log(selected)
+        resolve()
       })
     }
   }
