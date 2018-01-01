@@ -47,3 +47,11 @@ export function get_mention_info(teamid, channelid, start, end) {
     params: { team: teamid, channel: channelid, from: Math.floor(start.getTime() / 1000), to: Math.floor(end.getTime() / 1000) }
   })
 }
+
+export function get_channel_info(teamid, channelid, start, end) {
+  return request({
+    url: 'api/channel/info',
+    method: 'get',
+    params: { team: teamid, channel: channelid, from: Math.floor(start.getTime() / 1000), to: Math.floor(end.getTime() / 1000) }
+  })
+}

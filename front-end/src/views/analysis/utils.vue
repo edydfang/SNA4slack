@@ -171,7 +171,7 @@
             </el-col>
             <el-col :span="10" >
               <div class='card-panel-text'>Accounts</div>
-              <span class='card-panel-num'>{{account}}</span>
+              <span class='card-panel-num'>{{info.accounts}}</span>
             </el-col>
           </el-card>
         </el-col>
@@ -182,7 +182,7 @@
             </el-col>
             <el-col :span="10" class=''>
               <div class='card-panel-text'>Messages</div>
-              <span class='card-panel-num'>{{message}}</span>
+              <span class='card-panel-num'>{{info.messages}}</span>
             </el-col>
           </el-card>
         </el-col>
@@ -193,7 +193,7 @@
             </el-col>
             <el-col :span="10" class=''>
               <div class='card-panel-text'>Relations</div>
-              <span class='card-panel-num'>{{at}}</span>
+              <span class='card-panel-num'>{{info.relations}}</span>
             </el-col>
           </el-card>
         </el-col>
@@ -204,7 +204,7 @@
             </el-col>
             <el-col :span="10" class=''>
              <div class='card-panel-text'>Created</div>
-              <span class='card-panel-num'>{{created}}</span>
+              <span class='card-panel-num'>{{info.earliest}}</span>
             </el-col>
           </el-card>
         </el-col>
@@ -215,6 +215,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import { get_channel_info } from '@/api/slack_data'
 import Network from './relation_network.vue'
 export default {
   name: 'analysis-utils',
@@ -225,10 +226,7 @@ export default {
   data() {
     return {
       type: 'node',
-      account: 1000,
-      message: 500,
-      at: 88,
-      created: '2017.9',
+      info: '',
       date: [new Date(2008, 1, 1), new Date()],
       admin1: { name: 'Admin1', image: 'static/friends.svg' },
       admin2: { name: 'Admin2', image: 'static/friends.svg' },
@@ -275,6 +273,13 @@ export default {
           this.type = 'node'
         }
       }
+    },
+    channelId: function() {
+      get_channel_info(this.team_info.id, this.channelId, this.date[0], this.date[1]).then(response => {
+        this.info = response.data
+      }).catch(error => {
+        console.log(error)
+      })
     }
   },
   methods: {
@@ -282,6 +287,13 @@ export default {
       this.admin1 = { name: 'Admin1', image: 'static/friends.svg' }
       this.admin2 = { name: 'Admin2', image: 'static/friends.svg' }
     }
+  },
+  mounted: function() {
+    get_channel_info(this.team_info.id, this.channelId, this.date[0], this.date[1]).then(response => {
+      this.info = response.data
+    }).catch(error => {
+      console.log(error)
+    })
   }
 
 }
