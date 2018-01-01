@@ -11,7 +11,7 @@ export function extract_nodes(data, userlist) {
   nodes = Array.from(nodes).map(idx => {
     var obj
     if (userlist.hasOwnProperty(idx)) {
-      obj = { id: idx, name: userlist[idx].name, _color: '#' + userlist[idx].color }
+      obj = { id: idx, name: userlist[idx].name, _color: '#' + userlist[idx].color, image: userlist[idx].image }
     } else {
       obj = { id: idx, name: idx }
     }
