@@ -48,7 +48,7 @@
   margin-right: 3%;
   margin-top: 3%;
   height: 0px;
-  padding-bottom: 30%;
+  padding-bottom: 27%;
 }
 .box1{
   margin-left: 6%;

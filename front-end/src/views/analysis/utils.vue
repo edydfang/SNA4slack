@@ -45,12 +45,12 @@
             <div>
               <el-row class='addline'>
                 <el-col :span="12" >
-                  <img src="../../assets/friends.svg"  class="admin">
-                  <div class="admin-name">{{admin1}}</div>
+                  <img :src='admin1.image' class="admin">
+                  <div class="admin-name">{{admin1.name}}</div>
                 </el-col>
                 <el-col :span="12" >
-                  <img src="../../assets/friends.svg"  class="admin">
-                  <div class="admin-name">{{admin2}}</div>
+                  <img :src='admin2.image'  class="admin">
+                  <div class="admin-name">{{admin2.name}}</div>
                 </el-col>
               </el-row>
               <el-row class='addline' style="margin-left:5%; margin-right:5%">
@@ -74,7 +74,7 @@
                 <article class="media" >
                 <figure class="media-right" >
                   <p class="image is-64x64">
-                    <img src="../../assets/friends.svg"  class="admin">
+                    <img :src='admin1.image'  class="admin">
                   </p>
                 </figure>
                 <div class="media-content" >
@@ -97,7 +97,7 @@
                 </div>
                 <figure class="media-right"  >
                   <p class="image is-64x64">
-                    <img src="../../assets/friends.svg"  class="admin">
+                    <img :src='admin2.image'  class="admin">
                   </p>
                 </figure>
               </article>
@@ -111,11 +111,11 @@
             <div>
               <el-row class='addline'>
                 <el-col :span="6" >
-                  <img src="../../assets/friends.svg"  class="admin2"><span>&nbsp</span>
+                  <img :src='admin1.image' class="admin2"><span>&nbsp</span>
                 </el-col>
                 <el-col :span="10" :offset='3'>
-                  <div class="admin-name" style="text-align:left">{{admin1}}</div>
-                  <div class="text" style="text-align:left">sustech.......</div>
+                  <div class="admin-name" style="text-align:left">{{admin1.name}}</div>
+                  <div class="text" style="text-align:left"></div>
                 </el-col>
               </el-row>
               <el-row class='addline' style="margin-left:5%; margin-right:5%">
@@ -140,7 +140,7 @@
               <article class="media" >
                 <figure class="media-right" >
                   <p class="image is-64x64">
-                    <img src="../../assets/friends.svg"  class="admin">
+                    <img :src='admin1.image'  class="admin">
                   </p>
                 </figure>
                 <div class="media-content" >
@@ -234,14 +234,14 @@ export default {
   },
   data() {
     return {
-      type: 'edge',
+      type: 'node',
       account: 1000,
       message: 500,
       at: 88,
       created: '2017.9',
       date: [new Date(2008, 1, 1), new Date()],
-      admin1: 'Fang',
-      admin2: 'Xieyi',
+      admin1: { name: 'Admin1', image: '../../assets/friends.svg' },
+      admin2: { name: 'Admin2', image: '../../assets/friends.svg' },
       pickerOptions: {
         shortcuts: [{
           text: 'Latest week',
@@ -266,7 +266,25 @@ export default {
   computed: {
     ...mapGetters([
       'team_info'
+    ]),
+    ...mapGetters([
+      'selected_info'
     ])
+  },
+  watch: {
+    selected_info: function() {
+      var count = 0
+      for (var s in this.selected_info) {
+        if (count === 1) {
+          this.admin2 = this.selected_info[s]
+          this.type = 'edge'
+        } else {
+          this.admin1 = this.selected_info[s]
+          count++
+          this.type = 'node'
+        }
+      }
+    }
   },
   methods: {
     changeType: function() {

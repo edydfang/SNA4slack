@@ -20,7 +20,7 @@ var extract_nodes = (data, userlist) => {
   nodes = Array.from(nodes).map(idx => {
     var obj
     if (userlist.hasOwnProperty(idx)) {
-      obj = { id: idx, name: userlist[idx].name, _color: '#' + userlist[idx].color }
+      obj = { id: idx, name: userlist[idx].name, _color: '#' + userlist[idx].color, image: userlist[idx].image }
     } else {
       obj = { id: idx, name: idx }
     }
@@ -127,6 +127,8 @@ export default {
     },
     selectNode: function(node) {
       this.selected[node.id] = node
+      console.log(this.selected)
+      this.$store.dispatch('SetSelection', this.selected)
     },
     selectLink: function(link) {
       this.linkSelected[link.id] = link
@@ -136,12 +138,12 @@ export default {
       this.linkSelected = {}
     },
     nodeClick: function(evt, node) {
-      console.log(node)
+      // console.log(node)
       this.clearSelection()
       this.selectNode(node)
     },
     linkClick: function(evt, link) {
-      console.log(link.id)
+      // console.log(link.id)
       this.clearSelection()
       this.selectNodeId(link.sid)
       this.selectNodeId(link.tid)
