@@ -6,60 +6,11 @@
 </template>
 <script>
 import D3Network from 'vue-d3-network'
-import { get_mention_info } from '@/api/slack_data'
-import { get_channel_user } from '@/api/slack_data'
-
-var extract_nodes = (data, userlist) => {
-  if (!data) return null
-  let nodes = new Set()
-  for (var i = data.length - 1; i >= 0; i--) {
-    nodes.add(data[i].to_user)
-    nodes.add(data[i].from_user)
-  }
-  // process user related info
-  nodes = Array.from(nodes).map(idx => {
-    var obj
-    if (userlist.hasOwnProperty(idx)) {
-      obj = { id: idx, name: userlist[idx].name, _color: '#' + userlist[idx].color, image: userlist[idx].image }
-    } else {
-      obj = { id: idx, name: idx }
-    }
-    return obj
-  })
-  console.log(nodes)
-  return nodes
-}
-
-var extract_links = (data) => {
-  if (!data) return null
-  const links = []
-  for (var i = data.length - 1; i >= 0; i--) {
-    links.push({ id: data[i].from_user + '-' + data[i].to_user, sid: data[i].from_user, tid: data[i].to_user, _color: 'orange' })
-  }
-  // console.log(links)
-  return links
-}
-
-var get_userlist = function(context) {
-  // console.log(context.channelId)
-  // console.log(context.dateRange)
-  get_channel_user(context.teamId, context.channelId).then(responce => {
-    context.userlist = responce.data
-    update_rawdata(context)
-  })
-}
-
-var update_rawdata = function(context) {
-  // console.log(context.channelId)
-  // console.log(context.dateRange)
-  get_mention_info(context.teamId, context.channelId, context.dateRange[0], context.dateRange[1]).then(responce => {
-    context.rawdata = responce.data
-  })
-}
+import { extract_nodes, extract_links, get_userlist, update_rawdata } from '@/api/data_process'
 
 export default {
   name: 'network',
-  props: ['nodesData', 'linksData', 'teamId', 'channelId', 'dateRange', 'selectedNode'],
+  props: { teamId: String, channelId: String, dateRange: Array },
   data() {
     return {
       rawdata: null,
@@ -95,9 +46,6 @@ export default {
     },
     channelId: function() {
       get_userlist(this)
-    },
-    selectedNode: function() {
-      console.log('gg')
     }
   },
   methods: {
