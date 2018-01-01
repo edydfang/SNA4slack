@@ -22,10 +22,6 @@
       <el-row>
         <el-col :span="15">
           <el-card class="box-card">
-            <div slot="header" class="clearfix">
-              <span>Graph</span>
-              <el-button style="float: right; padding: 3px " type="text"  v-on:click="changeType()">操作按钮</el-button>
-            </div>
             <div >
               <network
                 :team-id="this.team_info.id"
@@ -39,9 +35,6 @@
 
         <el-col :span="8" class='margin'>
           <el-card v-if="type === 'edge'" class="box-card2">
-            <div slot="header" class="clearfix">
-              <span>Info-edge</span>
-            </div>
             <div>
               <el-row class='addline'>
                 <el-col :span="12" >
@@ -105,9 +98,6 @@
             </div>
           </el-card>
           <el-card v-if="type === 'node'" class="box-card2">
-            <div slot="header" class="clearfix">
-              <span>Info-node</span>
-            </div>
             <div>
               <el-row class='addline'>
                 <el-col :span="6" >
@@ -273,6 +263,7 @@ export default {
   },
   watch: {
     selected_info: function() {
+      this.clearSelection()
       var count = 0
       for (var s in this.selected_info) {
         if (count === 1) {
@@ -287,12 +278,9 @@ export default {
     }
   },
   methods: {
-    changeType: function() {
-      if (this.type === 'edge') {
-        this.type = 'node'
-      } else {
-        this.type = 'edge'
-      }
+    clearSelection: function() {
+      this.admin1 = { name: 'Admin1', image: 'static/friends.svg' }
+      this.admin2 = { name: 'Admin2', image: 'static/friends.svg' }
     }
   }
 
@@ -369,7 +357,7 @@ export default {
   margin-top: 5%;
   width: 45%;
   border-radius: 50%;
-  border: 3px solid #eee;
+  border: 3px solid #ebeef5;
   overflow: hidden;
 }
 .admin2 {
@@ -379,7 +367,7 @@ export default {
   border-bottom-right-radius: 5px;
   width: 100%;
   border-radius: 50%;
-  border: 3px solid #eee;
+  border: 3px solid #ebeef5;
   overflow: hidden;
 }
 .admin-name{
@@ -388,6 +376,7 @@ export default {
   color: rgba(0, 0, 0, 0.45);
   font-family: 'Nunito', sans-serif;
   text-align: center;
+  text-transform:capitalize;
 }
 .addline{
   border-bottom: 2px solid #ebeef5;
