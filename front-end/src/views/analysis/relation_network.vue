@@ -127,7 +127,7 @@ export default {
     },
     selectNode: function(node) {
       this.selected[node.id] = node
-      console.log(this.selected)
+      // console.log(this.selected)
       this.$store.dispatch('SetSelection', this.selected)
     },
     selectLink: function(link) {

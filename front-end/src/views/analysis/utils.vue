@@ -240,8 +240,8 @@ export default {
       at: 88,
       created: '2017.9',
       date: [new Date(2008, 1, 1), new Date()],
-      admin1: { name: 'Admin1', image: '../../assets/friends.svg' },
-      admin2: { name: 'Admin2', image: '../../assets/friends.svg' },
+      admin1: { name: 'Admin1', image: 'static/friends.svg' },
+      admin2: { name: 'Admin2', image: 'static/friends.svg' },
       pickerOptions: {
         shortcuts: [{
           text: 'Latest week',
