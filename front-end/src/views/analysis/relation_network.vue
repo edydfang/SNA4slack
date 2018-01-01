@@ -6,9 +6,7 @@
 </template>
 <script>
 import D3Network from 'vue-d3-network'
-
 import { extract_nodes, extract_links, get_userlist, update_rawdata } from '@/api/data_process'
-
 
 export default {
   name: 'network',
