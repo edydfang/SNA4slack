@@ -28,7 +28,7 @@ git clone https://github.com/imxieyi/slack-diagram.git
 # for front end
 cd slack-diagram/front-end
 npm install
-node run dev
+npm run dev
 ```
 
 Open [http://localhost:9528](http://localhost:9528) in the browser.
