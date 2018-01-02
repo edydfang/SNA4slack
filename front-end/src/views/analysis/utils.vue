@@ -131,13 +131,15 @@
                 <figure class="media-right" >
                   <p class="image is-64x64">
                     <img :src='admin1.image'  class="admin">
+                    <div class='time-text'>{{info.earliest}}</div>
+                    <div class='time-text'>{{info.earliest}}</div>
                   </p>
                 </figure>
                 <div class="media-content" >
                   <div class="content content-left" >
                     <p>
                       <br>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
+                      Lorem ipsum dolor sit amet, 
                     </p>
                   </div>
                 </div>
@@ -277,6 +279,7 @@ export default {
     channelId: function() {
       get_channel_info(this.team_info.id, this.channelId, this.date[0], this.date[1]).then(response => {
         this.info = response.data
+        this.dateFormat(this.info.earliest)
       }).catch(error => {
         console.log(error)
       })
@@ -286,11 +289,16 @@ export default {
     clearSelection: function() {
       this.admin1 = { name: 'Admin1', image: 'static/friends.svg' }
       this.admin2 = { name: 'Admin2', image: 'static/friends.svg' }
+    },
+    dateFormat: function(unixtime) {
+      var unixTimestamp = new Date(unixtime * 1000)
+      this.info.earliest = unixTimestamp.toLocaleString().split(',')[0]
     }
   },
   mounted: function() {
     get_channel_info(this.team_info.id, this.channelId, this.date[0], this.date[1]).then(response => {
       this.info = response.data
+      this.dateFormat(this.info.earliest)
     }).catch(error => {
       console.log(error)
     })
@@ -365,7 +373,7 @@ export default {
 
 .admin {
   padding:1%;
-  margin-left: 25%; 
+  margin-left: 25%;
   margin-top: 5%;
   width: 45%;
   border-radius: 50%;
@@ -374,8 +382,8 @@ export default {
 }
 .admin2 {
   padding:1%;
+  margin-top: 5%;
   margin-left: 6%; 
-  margin-top: 5%; 
   border-bottom-right-radius: 5px;
   width: 100%;
   border-radius: 50%;
@@ -417,6 +425,18 @@ export default {
     padding-top: 0px;
     border-top: 0px;
 }
-
+.time-text{
+  margin-left: 35%;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.45);
+  font-family: 'Nunito', sans-serif;
+  font-size: 11px;
+}
+.media-right{
+  margin-top:0em;
+  margin-right: 30px;
+  margin-left: 0px;
+  margin-bottom:  5px; 
+}
 
 </style>
