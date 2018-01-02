@@ -56,11 +56,11 @@ export function get_channel_info(teamid, channelid, start, end) {
   })
 }
 
-export function get_chat_record_node(teamid, channelid, start, end, user1, user2) {
+export function get_chat_record_node(teamid, channelid, start, end, user) {
   return request({
-    url: 'api/channel/info',
+    url: 'api/user/message',
     method: 'get',
-    params: { team: teamid, channel: channelid, from: Math.floor(start.getTime() / 1000), to: Math.floor(end.getTime() / 1000) }
+    params: { team: teamid, channel: channelid, from: Math.floor(start.getTime() / 1000), to: Math.floor(end.getTime() / 1000), user: user }
   })
 }
 

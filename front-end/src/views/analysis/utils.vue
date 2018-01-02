@@ -109,8 +109,8 @@
                 <el-col :span="6" >
                   <img :src='admin1.image' class="admin2"><span>&nbsp</span>
                 </el-col>
-                <el-col :span="10" :offset='3'>
-                  <div class="admin-name" style="text-align:left">{{admin1.name}}</div>
+                <el-col :span="10" :offset='2'>
+                  <div class="admin-name-n" style="text-align:left">{{admin1.name}}</div>
                   <div class="text" style="text-align:left"></div>
                 </el-col>
               </el-row>
@@ -137,8 +137,8 @@
                 <figure class="media-right" >
                   <p class="image is-64x64">
                     <img :src='admin1.image'  class="admin">
-                    <div class='time-text'>{{info.earliest}}</div>
-                    <div class='time-text'>{{info.earliest}}</div>
+                    <div class='time-text'>{{record.date1}}</div>
+                    <div class='time-text2'>{{record.date2}}</div>
                   </p>
                 </figure>
                 <div class="media-content" >
@@ -209,7 +209,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { get_channel_info } from '@/api/slack_data'
-// import { get_chat_record_node } from '@/api/slack_data'
+import { get_chat_record_node } from '@/api/slack_data'
 import { get_chat_record_edge } from '@/api/slack_data'
 import Network from './relation_network.vue'
 export default {
@@ -225,7 +225,7 @@ export default {
       date: [new Date(2008, 1, 1), new Date()],
       admin1: { id: 'Admin1', name: 'Admin1', image: 'static/friends.svg' },
       admin2: { id: 'Admin2', name: 'Admin2', image: 'static/friends.svg' },
-      chat_record: [{ user: 'Admin1', time: '', text: '... ...', date1: '', date2: '' }, { user: 'Admin2', time: '', text: '... ...', date1: '', date2: '' }],
+      chat_record: [{ user: 'Admin', time: '', text: '', date1: '', date2: '' }, { user: 'Admin', time: '', text: '', date1: '', date2: '' }],
       pickerOptions: {
         shortcuts: [{
           text: 'Latest week',
@@ -272,7 +272,16 @@ export default {
       if (this.type === 'edge') {
         get_chat_record_edge(this.team_info.id, this.channelId, this.date[0], this.date[1], this.admin1.id, this.admin2.id).then(response => {
           this.chat_record = response.data
-          console.log(this.chat_record)
+          for (var i in this.chat_record) {
+            this.chat_record[i].date1 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[0]
+            this.chat_record[i].date2 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[1]
+          }
+        }).catch(error => {
+          console.log(error)
+        })
+      } else {
+        get_chat_record_node(this.team_info.id, this.channelId, this.date[0], this.date[1], this.admin1.id).then(response => {
+          this.chat_record = response.data
           for (var i in this.chat_record) {
             this.chat_record[i].date1 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[0]
             this.chat_record[i].date2 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[1]
@@ -283,6 +292,7 @@ export default {
       }
     },
     channelId: function() {
+      this.clearSelection()
       get_channel_info(this.team_info.id, this.channelId, this.date[0], this.date[1]).then(response => {
         this.info = response.data
         this.dateFormat(this.info.earliest)
@@ -291,30 +301,42 @@ export default {
       })
     },
     date: function() {
+      this.clearSelection()
       get_channel_info(this.team_info.id, this.channelId, this.date[0], this.date[1]).then(response => {
         this.info = response.data
         this.dateFormat(this.info.earliest)
-        if (this.type === 'edge') {
-          get_chat_record_edge(this.team_info.id, this.channelId, this.date[0], this.date[1], this.admin1.id, this.admin2.id).then(response => {
-            this.chat_record = response.data
-            for (var i in this.chat_record) {
-              this.chat_record[i].date1 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[0]
-              this.chat_record[i].date2 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[1]
-            }
-          }).catch(error => {
-            console.log(error)
-          })
-        }
       }).catch(error => {
         console.log(error)
       })
+      if (this.type === 'edge') {
+        get_chat_record_edge(this.team_info.id, this.channelId, this.date[0], this.date[1], this.admin1.id, this.admin2.id).then(response => {
+          this.chat_record = response.data
+          for (var i in this.chat_record) {
+            this.chat_record[i].date1 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[0]
+            this.chat_record[i].date2 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[1]
+          }
+        }).catch(error => {
+          console.log(error)
+        })
+      } else {
+        get_chat_record_node(this.team_info.id, this.channelId, this.date[0], this.date[1], this.admin1.id).then(response => {
+          this.chat_record = response.data
+          for (var i in this.chat_record) {
+            this.chat_record[i].date1 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[0]
+            this.chat_record[i].date2 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[1]
+          }
+        }).catch(error => {
+          console.log(error)
+        })
+      }
     }
   },
   methods: {
     clearSelection: function() {
+      this.type = 'edge'
       this.admin1 = { name: 'Admin1', image: 'static/friends.svg' }
       this.admin2 = { name: 'Admin2', image: 'static/friends.svg' }
-      this.chat_record = [{ user: 'Admin1', time: '', text: '... ...', date1: '', date2: '' }, { user: 'Admin2', time: '', text: '... ...', date1: '', date2: '' }]
+      this.chat_record = [{ user: 'Admin', time: '', text: '', date1: '', date2: '' }, { user: 'Admin', time: '', text: '', date1: '', date2: '' }]
     },
     dateFormat: function(unixtime) {
       var unixTimestamp = new Date(unixtime * 1000)
@@ -428,6 +450,15 @@ export default {
   text-align: center;
   text-transform:capitalize;
 }
+.admin-name-n{
+  margin-top: 8%;
+  margin-bottom: 3px;
+  font-size: 24px;
+  color: rgba(0, 0, 0, 0.45);
+  font-family: 'Nunito', sans-serif;
+  text-align: center;
+  text-transform:capitalize;
+}
 .addline{
   border-bottom: 2px solid #ebeef5;
   margin-bottom: 5%;
@@ -461,7 +492,7 @@ export default {
   border-top: 0px;
 }
 .time-text{
-  margin-left: 35%;
+  margin-left: 30%;
   text-align: center;
   color: rgba(0, 0, 0, 0.45);
   font-family: 'Nunito', sans-serif;
