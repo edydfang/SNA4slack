@@ -64,36 +64,42 @@
                 </div>
               </el-row>
               <div class='chat-div' >
-                <article class="media" >
+                <div v-for="record in chat_record">
+                <article class="media" v-if="record.user === admin1.id">
                 <figure class="media-right" >
                   <p class="image is-64x64">
                     <img :src='admin1.image'  class="admin">
+                    <div class='time-text'>{{record.date1}}</div>
+                    <div class='time-text2'>{{record.date2}}</div>
                   </p>
                 </figure>
                 <div class="media-content" >
                   <div class="content content-left" >
                     <p>
                       <br>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
+                      {{record.text}}
                     </p>
                   </div>
                 </div>
               </article>
-              <article class="media" >
+              <article class="media" v-if="record.user === admin2.id">
                 <div class="media-content content-right">
                   <div class="content">
                     <p>
                       <br>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
+                      {{record.text}}
                     </p>
                   </div>
                 </div>
                 <figure class="media-right"  >
                   <p class="image is-64x64">
                     <img :src='admin2.image'  class="admin">
+                    <div class='time-text'>{{record.date1}}</div>
+                    <div class='time-text2'>{{record.date2}}</div>
                   </p>
                 </figure>
               </article>
+              </div>
               </div>
             </div>
           </el-card>
@@ -127,7 +133,7 @@
               </el-row>
 
               <div class='chat-div' >
-              <article class="media" >
+              <article class="media" v-for="record in chat_record" >
                 <figure class="media-right" >
                   <p class="image is-64x64">
                     <img :src='admin1.image'  class="admin">
@@ -139,22 +145,7 @@
                   <div class="content content-left" >
                     <p>
                       <br>
-                      Lorem ipsum dolor sit amet, 
-                    </p>
-                  </div>
-                </div>
-              </article>
-              <article class="media" >
-                <figure class="media-right" >
-                  <p class="image is-64x64">
-                    <img src="../../assets/friends.svg"  class="admin">
-                  </p>
-                </figure>
-                <div class="media-content" >
-                  <div class="content content-left" >
-                    <p>
-                      <br>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
+                      {{record.text}}
                     </p>
                   </div>
                 </div>
@@ -218,6 +209,8 @@
 <script>
 import { mapGetters } from 'vuex'
 import { get_channel_info } from '@/api/slack_data'
+// import { get_chat_record_node } from '@/api/slack_data'
+import { get_chat_record_edge } from '@/api/slack_data'
 import Network from './relation_network.vue'
 export default {
   name: 'analysis-utils',
@@ -227,11 +220,12 @@ export default {
   },
   data() {
     return {
-      type: 'node',
+      type: 'edge',
       info: '',
       date: [new Date(2008, 1, 1), new Date()],
-      admin1: { name: 'Admin1', image: 'static/friends.svg' },
-      admin2: { name: 'Admin2', image: 'static/friends.svg' },
+      admin1: { id: 'Admin1', name: 'Admin1', image: 'static/friends.svg' },
+      admin2: { id: 'Admin2', name: 'Admin2', image: 'static/friends.svg' },
+      chat_record: [{ user: 'Admin1', time: '', text: '... ...', date1: '', date2: '' }, { user: 'Admin2', time: '', text: '... ...', date1: '', date2: '' }],
       pickerOptions: {
         shortcuts: [{
           text: 'Latest week',
@@ -275,6 +269,17 @@ export default {
           this.type = 'node'
         }
       }
+      if (this.type === 'edge') {
+        get_chat_record_edge(this.team_info.id, this.channelId, this.date[0], this.date[1], this.admin1.id, this.admin2.id).then(response => {
+          this.chat_record = response.data
+          for (var i in this.chat_record) {
+            this.chat_record[i].date1 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[0]
+            this.chat_record[i].date2 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[1]
+          }
+        }).catch(error => {
+          console.log(error)
+        })
+      }
     },
     channelId: function() {
       get_channel_info(this.team_info.id, this.channelId, this.date[0], this.date[1]).then(response => {
@@ -289,10 +294,15 @@ export default {
     clearSelection: function() {
       this.admin1 = { name: 'Admin1', image: 'static/friends.svg' }
       this.admin2 = { name: 'Admin2', image: 'static/friends.svg' }
+      this.chat_record = [{ user: 'Admin1', time: '', text: '... ...', date1: '', date2: '' }, { user: 'Admin2', time: '', text: '... ...', date1: '', date2: '' }]
     },
     dateFormat: function(unixtime) {
       var unixTimestamp = new Date(unixtime * 1000)
       this.info.earliest = unixTimestamp.toLocaleString().split(',')[0]
+    },
+    dateFormat2: function(unixtime) {
+      var unixTimestamp = new Date(unixtime * 1000)
+      return unixTimestamp.toLocaleString()
     }
   },
   mounted: function() {
@@ -406,24 +416,29 @@ export default {
 .chat-div{
   height:0px;
   width:95%;
-  padding-bottom:43%;
+  padding-bottom:60%;
   float:left; 
   overflow-y:scroll;
+  overflow-x: hidden;
   margin-right: 5%;
+  margin-left: 5%;
 }
 
 .content-left{
-  margin-right: 10%;
   width: 90%;
+  word-break: break-all;
 }
 .content-right{
-  margin-left: 10%;
+  margin-left: 3%;
+  margin-right: 2%;
   width: 90%;
+  text-align: right;
+  word-break: break-all;
 }
 .media+.media {
-    margin-top: 0px;
-    padding-top: 0px;
-    border-top: 0px;
+  margin-top: 0px;
+  padding-top: 0px;
+  border-top: 0px;
 }
 .time-text{
   margin-left: 35%;
@@ -432,9 +447,16 @@ export default {
   font-family: 'Nunito', sans-serif;
   font-size: 11px;
 }
+.time-text2{
+  margin-left: 0%;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.45);
+  font-family: 'Nunito', sans-serif;
+  font-size: 11px;
+}
 .media-right{
   margin-top:0em;
-  margin-right: 30px;
+  margin-right: 40px;
   margin-left: 0px;
   margin-bottom:  5px; 
 }
