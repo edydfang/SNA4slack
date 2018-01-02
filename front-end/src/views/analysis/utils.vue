@@ -272,6 +272,7 @@ export default {
       if (this.type === 'edge') {
         get_chat_record_edge(this.team_info.id, this.channelId, this.date[0], this.date[1], this.admin1.id, this.admin2.id).then(response => {
           this.chat_record = response.data
+          console.log(this.chat_record)
           for (var i in this.chat_record) {
             this.chat_record[i].date1 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[0]
             this.chat_record[i].date2 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[1]
@@ -285,6 +286,25 @@ export default {
       get_channel_info(this.team_info.id, this.channelId, this.date[0], this.date[1]).then(response => {
         this.info = response.data
         this.dateFormat(this.info.earliest)
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+    date: function() {
+      get_channel_info(this.team_info.id, this.channelId, this.date[0], this.date[1]).then(response => {
+        this.info = response.data
+        this.dateFormat(this.info.earliest)
+        if (this.type === 'edge') {
+          get_chat_record_edge(this.team_info.id, this.channelId, this.date[0], this.date[1], this.admin1.id, this.admin2.id).then(response => {
+            this.chat_record = response.data
+            for (var i in this.chat_record) {
+              this.chat_record[i].date1 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[0]
+              this.chat_record[i].date2 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[1]
+            }
+          }).catch(error => {
+            console.log(error)
+          })
+        }
       }).catch(error => {
         console.log(error)
       })
