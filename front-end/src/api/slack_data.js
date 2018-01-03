@@ -88,7 +88,6 @@ export function get_sentiment_node(teamid, channelid, start, end, user) {
   })
 }
 
-
 export function get_user_rank_data(teamid, start, end) {
   return request({
     url: 'api/analysis/team-frequency/' + teamid + '/' + Math.floor(start.getTime() / 1000) + '/' + Math.floor(end.getTime() / 1000) + '/10',
@@ -103,7 +102,6 @@ export function get_sentiment_edge(teamid, channelid, start, end, user1, user2) 
     method: 'get'
   })
 }
-
 
 export function get_itimate_edge(teamid, channelid, start, end, user1, user2) {
   return request({
@@ -136,4 +134,3 @@ export function get_meet_day(teamid, channelid, user1, user2) {
     params: { team: teamid, channel: channelid, user1: user1, user2: user2 }
   })
 }
-
