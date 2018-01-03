@@ -23,7 +23,8 @@ export default {
         linkWidth: 5
       },
       selected: {},
-      linkSelected: {}
+      linkSelected: {},
+      firstrun: true
     }
   },
   components: { D3Network },
@@ -32,6 +33,7 @@ export default {
   },
   computed: {
     nodes: function() {
+      this.zoomsvg()
       return extract_nodes(this.rawdata, this.userlist)
     },
     links: function() {
@@ -42,7 +44,10 @@ export default {
     }
   },
   updated() {
-    this.zoomsvg()
+    if (this.firstrun) {
+      this.zoomsvg()
+      this.firstrun = false
+    }
   },
   watch: {
     dateRange: function() {
