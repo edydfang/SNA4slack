@@ -38,11 +38,11 @@
             <div>
               <el-row class='addline'>
                 <el-col :span="12" >
-                  <img :src='admin1.image' class="admin">
+                  <img :src='admin1.image' class="admin" onError="this.onerror=null;this.src='static/friends.svg';" />
                   <div class="admin-name">{{admin1.name}}</div>
                 </el-col>
                 <el-col :span="12" >
-                  <img :src='admin2.image'  class="admin">
+                  <img :src='admin2.image'  class="admin" onError="this.onerror=null;this.src='static/friends.svg';" />
                   <div class="admin-name">{{admin2.name}}</div>
                 </el-col>
               </el-row>
@@ -50,7 +50,7 @@
                 <div class="text item">
                   <svg-icon icon-class="goodfriends" />
                   <span style='margin-left:3%'>Intimate Degree:</span>
-                  <span>80%</span>
+                  <span>{{itimate}}</span>
                 </div>
                 <div class="text item">
                   <svg-icon icon-class="smell" />
@@ -60,7 +60,7 @@
                 <div class="text item">
                   <svg-icon icon-class="date" />
                   <span style='margin-left:3%'>Meet Days:</span>
-                  <span>153 days</span>
+                  <span>{{meetdays}} days</span>
                 </div>
               </el-row>
               <div class='chat-div' >
@@ -107,7 +107,7 @@
             <div>
               <el-row class='addline'>
                 <el-col :span="6" >
-                  <img :src='admin1.image' class="admin2"><span>&nbsp</span>
+                  <img :src='admin1.image' class="admin2" onError="this.onerror=null;this.src='static/friends.svg';" /><span>&nbsp</span>
                 </el-col>
                 <el-col :span="10" :offset='2'>
                   <div class="admin-name-n" style="text-align:left">{{admin1.name}}</div>
@@ -118,7 +118,7 @@
                 <div class="text item">
                   <svg-icon icon-class="activity" /> 
                   <span style='margin-left:3%'>Activity Degree:</span>
-                  <span>80%</span>
+                  <span>{{activityDegree}}</span>
                 </div>
                 <div class="text item">
                   <svg-icon icon-class="smell" /> 
@@ -128,7 +128,7 @@
                 <div class="text item">
                   <svg-icon icon-class="date" /> 
                   <span style='margin-left:3%'>Meet Days:</span>
-                  <span>153 days</span>
+                  <span>{{joindays}} days</span>
                 </div>
               </el-row>
 
@@ -212,6 +212,11 @@ import { get_channel_info } from '@/api/slack_data'
 import { get_chat_record_node } from '@/api/slack_data'
 import { get_chat_record_edge } from '@/api/slack_data'
 import { get_sentiment_node } from '@/api/slack_data'
+import { get_itimate_edge } from '@/api/slack_data'
+import { get_sentiment_edge } from '@/api/slack_data'
+import { get_activity } from '@/api/slack_data'
+import { get_joined_day } from '@/api/slack_data'
+import { get_meet_day } from '@/api/slack_data'
 import Network from './relation_network.vue'
 export default {
   name: 'analysis-utils',
@@ -224,6 +229,10 @@ export default {
       type: 'edge',
       info: '',
       sentiment: 0,
+      itimate: 0,
+      activityDegree: 0,
+      joindays: 0,
+      meetdays: 0,
       date: [new Date(2008, 1, 1), new Date()],
       admin1: { id: 'Admin1', name: 'Admin1', image: 'static/friends.svg' },
       admin2: { id: 'Admin2', name: 'Admin2', image: 'static/friends.svg' },
@@ -272,33 +281,9 @@ export default {
         }
       }
       if (this.type === 'edge') {
-        get_chat_record_edge(this.team_info.id, this.channelId, this.date[0], this.date[1], this.admin1.id, this.admin2.id).then(response => {
-          this.chat_record = response.data
-          for (var i in this.chat_record) {
-            this.chat_record[i].date1 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[0]
-            this.chat_record[i].date2 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[1]
-          }
-        }).catch(error => {
-          console.log(error)
-        })
+        this.edgeInfo()
       } else {
-        get_sentiment_node(this.team_info.id, this.channelId, this.date[0], this.date[1], this.admin1.id).then(response => {
-          this.sentiment = response.data.sentiment.positive
-          if (this.sentiment === 2) {
-            this.sentiment = 'not available :('
-          }
-        }).catch(error => {
-          console.log(error)
-        })
-        get_chat_record_node(this.team_info.id, this.channelId, this.date[0], this.date[1], this.admin1.id).then(response => {
-          this.chat_record = response.data
-          for (var i in this.chat_record) {
-            this.chat_record[i].date1 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[0]
-            this.chat_record[i].date2 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[1]
-          }
-        }).catch(error => {
-          console.log(error)
-        })
+        this.nodeInfo()
       }
     },
     channelId: function() {
@@ -319,38 +304,76 @@ export default {
         console.log(error)
       })
       if (this.type === 'edge') {
-        get_chat_record_edge(this.team_info.id, this.channelId, this.date[0], this.date[1], this.admin1.id, this.admin2.id).then(response => {
-          this.chat_record = response.data
-          for (var i in this.chat_record) {
-            this.chat_record[i].date1 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[0]
-            this.chat_record[i].date2 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[1]
-          }
-        }).catch(error => {
-          console.log(error)
-        })
+        this.edgeInfo()
       } else {
-        get_sentiment_node(this.team_info.id, this.channelId, this.date[0], this.date[1], this.admin1.id).then(response => {
-          this.sentiment = response.data.sentiment.positive
-          if (this.sentiment === 2) {
-            this.sentiment = 'not available :('
-          }
-        }).catch(error => {
-          console.log(error)
-        })
-        get_chat_record_node(this.team_info.id, this.channelId, this.date[0], this.date[1], this.admin1.id).then(response => {
-          this.chat_record = response.data
-          for (var i in this.chat_record) {
-            this.chat_record[i].date1 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[0]
-            this.chat_record[i].date2 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[1]
-          }
-        }).catch(error => {
-          console.log(error)
-        })
+        this.nodeInfo()
       }
     }
   },
   methods: {
+    nodeInfo: function() {
+      get_sentiment_node(this.team_info.id, this.channelId, this.date[0], this.date[1], this.admin1.id).then(response => {
+        this.sentiment = response.data.sentiment.positive
+        if (this.sentiment === 2) {
+          this.sentiment = 'not available :('
+        }
+      }).catch(error => {
+        console.log(error)
+      })
+      get_chat_record_node(this.team_info.id, this.channelId, this.date[0], this.date[1], this.admin1.id).then(response => {
+        this.chat_record = response.data
+        for (var i in this.chat_record) {
+          this.chat_record[i].date1 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[0]
+          this.chat_record[i].date2 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[1]
+        }
+      }).catch(error => {
+        console.log(error)
+      })
+      get_activity(this.team_info.id, this.channelId, this.date[0], this.date[1], this.admin1.id).then(response => {
+        this.activityDegree = response.data.count
+      }).catch(error => {
+        console.log(error)
+      })
+      get_joined_day(this.team_info.id, this.channelId, this.admin1.id).then(response => {
+        this.joindays = response.data
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+    edgeInfo: function() {
+      get_sentiment_edge(this.team_info.id, this.channelId, this.date[0], this.date[1], this.admin1.id, this.admin2.id).then(response => {
+        this.sentiment = response.data.sentiment.positive
+        if (this.sentiment === 2) {
+          this.sentiment = 'not available :('
+        }
+      }).catch(error => {
+        console.log(error)
+      })
+      get_chat_record_edge(this.team_info.id, this.channelId, this.date[0], this.date[1], this.admin1.id, this.admin2.id).then(response => {
+        this.chat_record = response.data
+        for (var i in this.chat_record) {
+          this.chat_record[i].date1 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[0]
+          this.chat_record[i].date2 = this.dateFormat2(this.chat_record[i].timestamp).split(',')[1]
+        }
+      }).catch(error => {
+        console.log(error)
+      })
+      get_itimate_edge(this.team_info.id, this.channelId, this.date[0], this.date[1], this.admin1.id, this.admin2.id).then(response => {
+        this.itimate = response.data.intimate
+      }).catch(error => {
+        console.log(error)
+      })
+      get_meet_day(this.team_info.id, this.channelId, this.admin1.id, this.admin2.id).then(response => {
+        this.meetdays = response.data
+      }).catch(error => {
+        console.log(error)
+      })
+    },
     clearSelection: function() {
+      this.joindays = 0
+      this.meetdays = 0
+      this.activityDegree = 0
+      this.itimate = 0
       this.sentiment = 0
       this.type = 'edge'
       this.admin1 = { name: 'Admin1', image: 'static/friends.svg' }
