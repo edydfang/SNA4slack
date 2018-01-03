@@ -87,3 +87,19 @@ export function get_sentiment_node(teamid, channelid, start, end, user) {
     method: 'get'
   })
 }
+
+export function get_sentiment_edge(teamid, channelid, start, end, user1, user2) {
+  return request({
+    url: 'api/analysis/sentiment-two-user/' + teamid + '/' + channelid + '/' + Math.floor(start.getTime() / 1000) + '/' + Math.floor(end.getTime() / 1000) + '/' + user1 + '/' + user2,
+    // url: 'api/analysis/channel-word-frequency/'+teamid+'/'+channelid,
+    method: 'get'
+  })
+}
+
+export function get_itimate_edge(teamid, channelid, start, end, user1, user2) {
+  return request({
+    url: 'api/analysis/intimate/' + teamid + '/' + channelid + '/' + Math.floor(start.getTime() / 1000) + '/' + Math.floor(end.getTime() / 1000) + '/' + user1 + '/' + user2,
+    // url: 'api/analysis/channel-word-frequency/'+teamid+'/'+channelid,
+    method: 'get'
+  })
+}
