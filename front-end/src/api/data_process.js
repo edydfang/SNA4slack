@@ -1,4 +1,4 @@
-import { get_mention_info, get_channel_user, get_channel_info, get_user_rank_data } from '@/api/slack_data'
+import { get_mention_info, get_channel_user, get_channel_info, get_user_rank_data, get_team_user } from '@/api/slack_data'
 
 export function extract_nodes(data, userlist) {
   if (!data) return null
@@ -11,7 +11,8 @@ export function extract_nodes(data, userlist) {
   nodes = Array.from(nodes).map(idx => {
     var obj
     if (userlist.hasOwnProperty(idx)) {
-      obj = { id: idx, name: userlist[idx].name, _color: '#' + userlist[idx].color, image: userlist[idx].image }
+      const user = userlist[idx]
+      obj = { id: idx, name: user.real_name !== '' ? user.real_name : user.name, _color: '#' + userlist[idx].color, image: userlist[idx].image }
     } else {
       obj = { id: idx, name: idx }
     }
@@ -75,14 +76,22 @@ export function get_user_rank(context) {
     userfrelist.push(cur.count)
     return userfrelist
   }
-  console.log(context.team_info.id)
-  get_user_rank_data(context.team_info.id, new Date(2008, 1), new Date()).then((resp) => {
-    const res = resp.data
-    context.labels = res.reduce(reducer_userid, [])
-    context.numbers = res.reduce(reducer_userfre, [])
+  let resp = null
+  const set_final_result = (userinfo) => {
+    // console.log(userinfo)
+    // console.log(resp)
+    context.labels = resp.reduce(reducer_userid, [])
+    // console.log(userinfo.data)
+    context.labels = context.labels.map((userid) => {
+      const user = userinfo.data[userid]
+      // console.log(userinfo.data[userid])
+      return user.real_name !== '' ? user.real_name : user.name
+    })
+    context.numbers = resp.reduce(reducer_userfre, [])
     context.data = { labels: context.labels, numbers: context.numbers }
-    console.log(context.labels)
-
-    // data.resp.data
-  })
+  }
+  get_user_rank_data(context.team_info.id, new Date(2008, 1), new Date()).then((res) => {
+    resp = res.data
+    return get_team_user(context.team_info.id)
+  }).then(set_final_result)
 }
