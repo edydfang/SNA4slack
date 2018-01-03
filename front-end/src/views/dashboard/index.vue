@@ -10,12 +10,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { get_channel_statistics } from '@/api/data_process'
-import Barchart from '../analysis/barchart'
+// import { get_channel_statistics } from '@/api/data_process'
+// import Barchart from '../analysis/barchart'
 export default {
   name: 'dashboard',
   created() {
-    get_channel_statistics(this.team_info.id, Object.keys(this.channel_list), this.channel_statistics)
+    // get_channel_statistics(this.team_info.id, Object.keys(this.channel_list), this.channel_statistics)
   },
   data() {
     return {
@@ -29,8 +29,7 @@ export default {
       'team_info',
       'channel_list'
     ])
-  },
-  components: { Barchart }
+  }
 }
 </script>
 

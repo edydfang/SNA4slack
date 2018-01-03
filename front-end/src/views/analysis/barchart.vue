@@ -11,7 +11,7 @@ export default {
     const margin = { top: 20, right: 20, bottom: 30, left: 40 }
     const width = +svg.attr('width') - margin.left - margin.right
     const height = +svg.attr('height') - margin.top - margin.bottom
-    console.log(height)
+    // console.log(height)
     const x = d3.scaleBand().rangeRound([0, width]).padding(0.1)
     const y = d3.scaleLinear().rangeRound([height, 0])
     // console.log(y)
