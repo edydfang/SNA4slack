@@ -1,4 +1,4 @@
-import { get_mention_info, get_channel_user, get_channel_info } from '@/api/slack_data'
+import { get_mention_info, get_channel_user, get_channel_info, get_user_rank_data } from '@/api/slack_data'
 
 export function extract_nodes(data, userlist) {
   if (!data) return null
@@ -64,4 +64,25 @@ export function get_channel_statistics(teamid, channelid_list, data) {
     }).then(() => { i >= channelid_list.length || loop(i + 1) })
   }
   loop(0)
+}
+
+export function get_user_rank(context) {
+  const reducer_userid = (useridlist, cur) => {
+    useridlist.push(cur.user)
+    return useridlist
+  }
+  const reducer_userfre = (userfrelist, cur) => {
+    userfrelist.push(cur.count)
+    return userfrelist
+  }
+  console.log(context.team_info.id)
+  get_user_rank_data(context.team_info.id, new Date(2008, 1), new Date()).then((resp) => {
+    const res = resp.data
+    context.labels = res.reduce(reducer_userid, [])
+    context.numbers = res.reduce(reducer_userfre, [])
+    context.data = { labels: context.labels, numbers: context.numbers }
+    console.log(context.labels)
+
+    // data.resp.data
+  })
 }

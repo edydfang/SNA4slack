@@ -21,7 +21,7 @@
             <span class="text">User Rank</span>
           </div>
           <div>
-            <chart :height="100" :labels="this.labels" :data="this.data"></chart>
+            <chart :height="100" :data="this.data" ></chart>
           </div>
         </el-card>
       </el-col>
@@ -34,6 +34,7 @@
 import Chart from './chart'
 import mywordcloud from './word_cloud.vue'
 import { mapGetters } from 'vuex'
+import { get_user_rank } from '@/api/data_process.js'
 
 export default {
   name: 'analysis-chat',
@@ -47,9 +48,13 @@ export default {
   },
   data() {
     return {
+      numbers: null,
       labels: null,
       data: null
     }
+  },
+  created() {
+    get_user_rank(this)
   }
 }
 

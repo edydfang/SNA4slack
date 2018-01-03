@@ -87,3 +87,11 @@ export function get_sentiment_node(teamid, channelid, start, end, user) {
     method: 'get'
   })
 }
+
+export function get_user_rank_data(teamid, start, end) {
+  return request({
+    url: 'api/analysis/team-frequency/' + teamid + '/' + Math.floor(start.getTime() / 1000) + '/' + Math.floor(end.getTime() / 1000) + '/10',
+    // url: 'api/analysis/channel-word-frequency/'+teamid+'/'+channelid,
+    method: 'get'
+  })
+}
