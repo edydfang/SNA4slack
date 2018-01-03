@@ -47,8 +47,8 @@ export default {
   },
   data() {
     return {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      data: [40, 39, 10, 40, 39, 80, 40]
+      labels: null,
+      data: null
     }
   }
 }
@@ -56,7 +56,6 @@ export default {
 </script>
 
 <style scoped>
-
 .text {
   font-size: 18px;
   font-family: 'Mukta Malar', sans-serif;

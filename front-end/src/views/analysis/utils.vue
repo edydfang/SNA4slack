@@ -55,7 +55,7 @@
                 <div class="text item">
                   <svg-icon icon-class="smell" />
                   <span style='margin-left:3%'>Emotional Analysis:</span>
-                  <span>80%</span>
+                  <span>{{sentiment}}</span>
                 </div>
                 <div class="text item">
                   <svg-icon icon-class="date" />
@@ -123,7 +123,7 @@
                 <div class="text item">
                   <svg-icon icon-class="smell" /> 
                   <span style='margin-left:3%'>Emotional Analysis:</span>
-                  <span>80%</span>
+                  <span>{{sentiment}}</span>
                 </div>
                 <div class="text item">
                   <svg-icon icon-class="date" /> 
@@ -211,6 +211,7 @@ import { mapGetters } from 'vuex'
 import { get_channel_info } from '@/api/slack_data'
 import { get_chat_record_node } from '@/api/slack_data'
 import { get_chat_record_edge } from '@/api/slack_data'
+import { get_sentiment_node } from '@/api/slack_data'
 import Network from './relation_network.vue'
 export default {
   name: 'analysis-utils',
@@ -222,6 +223,7 @@ export default {
     return {
       type: 'edge',
       info: '',
+      sentiment: 0,
       date: [new Date(2008, 1, 1), new Date()],
       admin1: { id: 'Admin1', name: 'Admin1', image: 'static/friends.svg' },
       admin2: { id: 'Admin2', name: 'Admin2', image: 'static/friends.svg' },
@@ -280,6 +282,14 @@ export default {
           console.log(error)
         })
       } else {
+        get_sentiment_node(this.team_info.id, this.channelId, this.date[0], this.date[1], this.admin1.id).then(response => {
+          this.sentiment = response.data.sentiment.positive
+          if (this.sentiment === 2) {
+            this.sentiment = 'not available :('
+          }
+        }).catch(error => {
+          console.log(error)
+        })
         get_chat_record_node(this.team_info.id, this.channelId, this.date[0], this.date[1], this.admin1.id).then(response => {
           this.chat_record = response.data
           for (var i in this.chat_record) {
@@ -319,6 +329,14 @@ export default {
           console.log(error)
         })
       } else {
+        get_sentiment_node(this.team_info.id, this.channelId, this.date[0], this.date[1], this.admin1.id).then(response => {
+          this.sentiment = response.data.sentiment.positive
+          if (this.sentiment === 2) {
+            this.sentiment = 'not available :('
+          }
+        }).catch(error => {
+          console.log(error)
+        })
         get_chat_record_node(this.team_info.id, this.channelId, this.date[0], this.date[1], this.admin1.id).then(response => {
           this.chat_record = response.data
           for (var i in this.chat_record) {
@@ -333,6 +351,7 @@ export default {
   },
   methods: {
     clearSelection: function() {
+      this.sentiment = 0
       this.type = 'edge'
       this.admin1 = { name: 'Admin1', image: 'static/friends.svg' }
       this.admin2 = { name: 'Admin2', image: 'static/friends.svg' }

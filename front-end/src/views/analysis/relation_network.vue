@@ -1,12 +1,13 @@
 <template>
-    <d3-network v-if="ready" :net-nodes="nodes" :net-links="links" :options="options" :selection="{nodes: selected, links: linkSelected}" @node-click='nodeClick' @link-click='linkClick' >
-      <selection v-if="ready" @action="selectionEvent" :data="selection()">
+    <d3-network v-if='ready' :net-nodes='nodes' :net-links='links' :options='options' :selection='{nodes: selected, links: linkSelected}' @node-click='nodeClick' @link-click='linkClick' >
+      <selection v-if='ready' @action='selectionEvent' :data='selection()'>
       </selection>
     </d3-network>
 </template>
 <script>
 import D3Network from 'vue-d3-network'
 import { extract_nodes, extract_links, get_userlist, update_rawdata } from '@/api/data_process'
+import * as d3 from 'd3'
 
 export default {
   name: 'network',
@@ -22,7 +23,8 @@ export default {
         linkWidth: 5
       },
       selected: {},
-      linkSelected: {}
+      linkSelected: {},
+      firstrun: true
     }
   },
   components: { D3Network },
@@ -31,6 +33,7 @@ export default {
   },
   computed: {
     nodes: function() {
+      this.zoomsvg()
       return extract_nodes(this.rawdata, this.userlist)
     },
     links: function() {
@@ -38,6 +41,12 @@ export default {
     },
     ready: function() {
       return this.nodes !== null && this.links !== null && this.userlist !== null
+    }
+  },
+  updated() {
+    if (this.firstrun) {
+      this.zoomsvg()
+      this.firstrun = false
     }
   },
   watch: {
@@ -49,6 +58,25 @@ export default {
     }
   },
   methods: {
+    zoomsvg: function() {
+      var svg = d3.select('svg.net-svg')
+
+      function scaled() {
+        svg.selectAll('g').attr('transform', d3.zoomTransform(this))
+      }
+
+      var zoom = d3.zoom().scaleExtent([0, 3]).on('zoom', scaled)
+      svg.selectAll('g').each(function() {
+        svg.call(zoom.transform, d3.zoomIdentity)
+        svg.selectAll('g').attr('transform', d3.zoomTransform(this))
+      })
+      console.log('zoomsvg() injection')
+      svg.call(zoom)
+        .on('mousedown.zoom', null)
+        .on('touchstart.zoom', null)
+        .on('touchmove.zoom', null)
+        .on('touchend.zoom', null)
+    },
     selection: function() {
       return {
         nodes: this.selected,
@@ -100,7 +128,7 @@ export default {
   }
 }
 </script>
-<style lang="css">
+<style lang='css'>
   .node.selected {
     stroke-width: 3;
     stroke: orange;
