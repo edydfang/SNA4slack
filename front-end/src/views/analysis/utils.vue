@@ -159,44 +159,44 @@
       <el-row style="margin-top:1%">
         <el-col :span="5" >
           <el-card  class='tag-card'>
-            <el-col :span="10" >
+            <el-col :span="6"  style="margin-right: 20px">
               <img src="../../assets/friends.svg" class="tag-img">
             </el-col>
             <el-col :span="10" >
-              <div class='card-panel-text' style="margin-right: 20px">Accounts</div>
+              <div class='card-panel-text'>Accounts</div>
               <span class='card-panel-num'>{{info.accounts}}</span>
             </el-col>
           </el-card>
         </el-col>
         <el-col :span="5" class='margin2'>
           <el-card class='tag-card'>
-              <el-col :span="10" >
+              <el-col :span="6"  style="margin-right: 20px">
               <img src="../../assets/message.svg" class="tag-img">
             </el-col>
-            <el-col :span="10" class=''>
-              <div class='card-panel-text' style="margin-right: 20px">Messages</div>
+            <el-col :span="10">
+              <div class='card-panel-text' >Messages</div>
               <span class='card-panel-num'>{{info.messages}}</span>
             </el-col>
           </el-card>
         </el-col>
         <el-col :span="5" class='margin2'>
           <el-card class='tag-card'>
-              <el-col :span="10" >
+              <el-col :span="6"  style="margin-right: 20px">
               <img src="../../assets/at.svg" class="tag-img">
             </el-col>
             <el-col :span="10" class=''>
-              <div class='card-panel-text' style="margin-right: 20px">Relations</div>
+              <div class='card-panel-text'>Relations</div>
               <span class='card-panel-num'>{{info.relations}}</span>
             </el-col>
           </el-card>
         </el-col>
         <el-col :span="5" class='margin2'>
           <el-card class='tag-card'>
-              <el-col :span="10" >
+              <el-col :span="6"  style="margin-right: 20px">
               <img src="../../assets/date.svg" class="tag-img">
             </el-col>
             <el-col :span="10" class=''>
-             <div class='card-panel-text' style="margin-right: 20px">Created</div>
+             <div class='card-panel-text'>Created</div>
               <span class='card-panel-num'>{{info.earliest}}</span>
             </el-col>
           </el-card>
