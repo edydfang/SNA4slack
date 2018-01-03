@@ -57,7 +57,6 @@ export default {
 .box1{
   margin-left: 6%;
   margin-right: 5%;
-
 }
 .box2{
   margin-left: 5%;
