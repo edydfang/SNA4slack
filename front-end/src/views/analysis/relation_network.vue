@@ -1,5 +1,5 @@
 <template>
-    <d3-network v-if="ready" :net-nodes="nodes" :net-links="links" :options="options" :selection="{nodes: selected, links: linkSelected}" @node-click='nodeClick' @link-click='linkClick'>
+    <d3-network v-if="ready" :net-nodes="nodes" :net-links="links" :options="options" :selection="{nodes: selected, links: linkSelected}" @node-click='nodeClick' @link-click='linkClick' >
       <selection v-if="ready" @action="selectionEvent" :data="selection()">
       </selection>
     </d3-network>
