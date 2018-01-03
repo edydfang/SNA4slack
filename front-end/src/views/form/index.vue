@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    <el-row>
-      <el-col :span='12'>
+    <el-row type="flex" justify="center">
+      <el-col :span="18">
         <el-card class='box-card box1'>
           <div slot="header" class="clearfix">
             <span class="text">WordCloud</span>
@@ -12,58 +12,50 @@
             ></mywordcloud>
           </div>
         </el-card>
-      </el-col> 
-      <el-col :span='12'>
+      </el-col>
+    </el-row>
+    <el-row type="flex" justify="center">
+      <el-col :span='18'>
         <el-card class='box-card box2'>
           <div slot="header" class="clearfix">
-            <span>graph2</span>
+            <span class="text">User Rank</span>
           </div>
           <div>
-            ...
+            <chart :height="100" :labels="this.labels" :data="this.data"></chart>
           </div>
         </el-card>
-      </el-col> 
-    </el-row>
-    
-     
+      </el-col>
+    </el-col>
+  </el-row>
   </div>
 </template>
 
 <script>
+import Chart from './chart'
 import mywordcloud from './word_cloud.vue'
 import { mapGetters } from 'vuex'
+
 export default {
   name: 'analysis-chat',
   components: {
-    mywordcloud
+    mywordcloud, Chart
   },
   computed: {
     ...mapGetters([
       'team_info'
     ])
+  },
+  data() {
+    return {
+      labels: null,
+      data: null
+    }
   }
 }
 
 </script>
 
 <style scoped>
-.box3{
-  margin-left: 3%;
-  margin-right: 3%;
-  margin-top: 3%;
-  height: 0px;
-  padding-bottom: 27%;
-}
-.box1{
-  margin-left: 6%;
-  margin-right: 5%;
-}
-.box2{
-  margin-left: 5%;
-  margin-right: 6%;
-  height: 0px;
-  padding-bottom: 50%;
-}
 .text {
   font-size: 18px;
   font-family: 'Mukta Malar', sans-serif;
