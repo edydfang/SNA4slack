@@ -1,4 +1,4 @@
-import { get_mention_info, get_channel_user } from '@/api/slack_data'
+import { get_mention_info, get_channel_user, get_channel_info } from '@/api/slack_data'
 
 export function extract_nodes(data, userlist) {
   if (!data) return null
@@ -17,7 +17,7 @@ export function extract_nodes(data, userlist) {
     }
     return obj
   })
-  console.log(nodes)
+  // console.log(nodes)
   return nodes
 }
 
@@ -46,4 +46,22 @@ export function update_rawdata(context) {
   get_mention_info(context.teamId, context.channelId, context.dateRange[0], context.dateRange[1]).then(responce => {
     context.rawdata = responce.data
   })
+}
+
+export function get_channel_statistics(teamid, channelid_list, data) {
+  const newdata = {}
+  // async loop
+  const loop = function(i) {
+    // console.log(channelid_list)
+    get_channel_info(teamid, channelid_list[i], new Date(2008, 1), new Date()).then(result => {
+      // console.log(newdata)
+      newdata[channelid_list[i]] = result.data
+      if (i === channelid_list.length - 1) {
+        // console.log(newdata)
+        data = newdata
+      }
+      // console.log(i)
+    }).then(() => { i >= channelid_list.length || loop(i + 1) })
+  }
+  loop(0)
 }
