@@ -79,3 +79,11 @@ export function get_word_cloud(teamid) {
     method: 'get'
   })
 }
+
+export function get_sentiment_node(teamid, channelid, start, end, user) {
+  return request({
+    url: 'api/analysis/sentiment-user/' + teamid + '/' + channelid + '/' + Math.floor(start.getTime() / 1000) + '/' + Math.floor(end.getTime() / 1000) + '/' + user,
+    // url: 'api/analysis/channel-word-frequency/'+teamid+'/'+channelid,
+    method: 'get'
+  })
+}
