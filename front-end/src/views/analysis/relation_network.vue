@@ -1,8 +1,11 @@
 <template>
+  <div>
+    <el-button type="primary" class="" @click="snapshot">Snapshot</el-button>
     <d3-network v-if='ready' :net-nodes='nodes' :net-links='links' :options='options' :selection='{nodes: selected, links: linkSelected}' @node-click='nodeClick' @link-click='linkClick' >
       <selection v-if='ready' @action='selectionEvent' :data='selection()'>
       </selection>
     </d3-network>
+  </div>
 </template>
 <script>
 import D3Network from 'vue-d3-network'
@@ -58,6 +61,11 @@ export default {
     }
   },
   methods: {
+    snapshot: function() {
+      // snapshot of the network
+      console.log('snapshot')
+      this.$children[1].screenShot('snapshot.svg', 'white', true, false)
+    },
     zoomsvg: function() {
       var svg = d3.select('svg.net-svg')
 

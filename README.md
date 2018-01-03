@@ -2,7 +2,7 @@
 A project for [SNA4Slack](http://score-contest.org/2018/projects/sna4slack.php).
 It obtains data from [SlackArchive](http://slackarchive.io/).
 
-![build status](https://travis-ci.org/edwardfang/SNA4slack.svg?branch=vue-front-end)
+[![build status](https://travis-ci.org/edwardfang/SNA4slack.svg?branch=vue-front-end)](https://travis-ci.org/edwardfang/SNA4slack)
 
 The back end source is located at [imxieyi/SlackDiagramServer](https://github.com/imxieyi/SlackDiagramServer)
 
@@ -38,11 +38,11 @@ Open [http://localhost:9528](http://localhost:9528) in the browser.
  - [x] Back End Basic API
  - [x] Dashboard Framwork
  - [ ] Dashborad Details
- - [ ] Network Graph Rendering
- - [ ] Deep Analysis for the SNA
- - [ ] Channel selection panel
- - [ ] Date Filter
- - [ ] Network graph
- - [ ] Member details panel
- - [ ] Relationship details panel
- - [ ] Report Export
+ - [x] Network Graph Rendering
+ - [x] Deep Analysis for the SNA
+ - [x] Channel selection panel
+ - [x] Date Filter
+ - [x] Network graph
+ - [x] Member details panel
+ - [x] Relationship details panel
+ - [x] Capture Snapshot

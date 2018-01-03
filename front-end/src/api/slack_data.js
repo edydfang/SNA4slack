@@ -88,10 +88,52 @@ export function get_sentiment_node(teamid, channelid, start, end, user) {
   })
 }
 
+
 export function get_user_rank_data(teamid, start, end) {
   return request({
     url: 'api/analysis/team-frequency/' + teamid + '/' + Math.floor(start.getTime() / 1000) + '/' + Math.floor(end.getTime() / 1000) + '/10',
+    method: 'get'
+  })
+}
+
+export function get_sentiment_edge(teamid, channelid, start, end, user1, user2) {
+  return request({
+    url: 'api/analysis/sentiment-two-user/' + teamid + '/' + channelid + '/' + Math.floor(start.getTime() / 1000) + '/' + Math.floor(end.getTime() / 1000) + '/' + user1 + '/' + user2,
     // url: 'api/analysis/channel-word-frequency/'+teamid+'/'+channelid,
     method: 'get'
   })
 }
+
+
+export function get_itimate_edge(teamid, channelid, start, end, user1, user2) {
+  return request({
+    url: 'api/analysis/intimate/' + teamid + '/' + channelid + '/' + Math.floor(start.getTime() / 1000) + '/' + Math.floor(end.getTime() / 1000) + '/' + user1 + '/' + user2,
+    // url: 'api/analysis/channel-word-frequency/'+teamid+'/'+channelid,
+    method: 'get'
+  })
+}
+
+export function get_activity(teamid, channelid, start, end, user) {
+  return request({
+    url: 'api/analysis/activity-degree/' + teamid + '/' + channelid + '/' + Math.floor(start.getTime() / 1000) + '/' + Math.floor(end.getTime() / 1000) + '/' + user,
+    // url: 'api/analysis/channel-word-frequency/'+teamid+'/'+channelid,
+    method: 'get'
+  })
+}
+
+export function get_joined_day(teamid, channelid, user) {
+  return request({
+    url: 'api/user/joindays',
+    method: 'get',
+    params: { team: teamid, channel: channelid, user: user }
+  })
+}
+
+export function get_meet_day(teamid, channelid, user1, user2) {
+  return request({
+    url: 'api/mention/meetdays',
+    method: 'get',
+    params: { team: teamid, channel: channelid, user1: user1, user2: user2 }
+  })
+}
+
