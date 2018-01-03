@@ -71,3 +71,11 @@ export function get_chat_record_edge(teamid, channelid, start, end, user1, user2
     params: { team: teamid, channel: channelid, from: Math.floor(start.getTime() / 1000), to: Math.floor(end.getTime() / 1000), user1: user1, user2: user2 }
   })
 }
+
+export function get_word_cloud(teamid) {
+  return request({
+    url: 'api/analysis/team-word-frequency/' + teamid,
+    // url: 'api/analysis/channel-word-frequency/'+teamid+'/'+channelid,
+    method: 'get'
+  })
+}

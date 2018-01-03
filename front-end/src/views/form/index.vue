@@ -4,10 +4,12 @@
       <el-col :span='12'>
         <el-card class='box-card box1'>
           <div slot="header" class="clearfix">
-            <span>graph1</span>
+            <span class="text">WordCloud</span>
           </div>
           <div>
-            ...
+            <mywordcloud
+              :team-id="this.team_info.id"
+            ></mywordcloud>
           </div>
         </el-card>
       </el-col> 
@@ -22,23 +24,25 @@
         </el-card>
       </el-col> 
     </el-row>
-    <el-row>
-      <el-col :span='24' >
-        <el-card class='box-card box3'>
-          <div slot="header" class="clearfix">
-            <span>graph3</span>
-          </div>
-          <div>
-            ...
-          </div>
-        </el-card>
-      </el-col> 
-    </el-row>
+    
      
   </div>
 </template>
 
 <script>
+import mywordcloud from './word_cloud.vue'
+import { mapGetters } from 'vuex'
+export default {
+  name: 'analysis-chat',
+  components: {
+    mywordcloud
+  },
+  computed: {
+    ...mapGetters([
+      'team_info'
+    ])
+  }
+}
 
 </script>
 
@@ -53,8 +57,7 @@
 .box1{
   margin-left: 6%;
   margin-right: 5%;
-  height: 0px;
-  padding-bottom: 50%;
+
 }
 .box2{
   margin-left: 5%;
@@ -62,6 +65,11 @@
   height: 0px;
   padding-bottom: 50%;
 }
-
+.text {
+  font-size: 18px;
+  font-family: 'Mukta Malar', sans-serif;
+  font-weight: bold;
+  color:#304156;
+}
 </style>
 
