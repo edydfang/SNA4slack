@@ -67,7 +67,7 @@ export const constantRouterMap = [
         path: 'index',
         name: 'statistics-chart',
         component: _import('form/index'),
-        meta: { title: 'Statistics Chat', icon: 'form' }
+        meta: { title: 'Statistics Chart', icon: 'form' }
       }
     ]
   },

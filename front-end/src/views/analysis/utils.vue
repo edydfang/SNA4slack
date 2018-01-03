@@ -116,18 +116,18 @@
               </el-row>
               <el-row class='addline' style="margin-left:5%; margin-right:5%">
                 <div class="text item">
-                  <svg-icon icon-class="activity" /> 
+                  <svg-icon icon-class="activity" />
                   <span style='margin-left:3%'>Activity Degree:</span>
                   <span>{{activityDegree}}</span>
                 </div>
                 <div class="text item">
-                  <svg-icon icon-class="smell" /> 
+                  <svg-icon icon-class="smell" />
                   <span style='margin-left:3%'>Emotional Analysis:</span>
                   <span>{{sentiment}}</span>
                 </div>
                 <div class="text item">
-                  <svg-icon icon-class="date" /> 
-                  <span style='margin-left:3%'>Meet Days:</span>
+                  <svg-icon icon-class="date" />
+                  <span style='margin-left:3%'>Join Days:</span>
                   <span>{{joindays}} days</span>
                 </div>
               </el-row>
@@ -478,7 +478,7 @@ export default {
 .admin2 {
   padding:1%;
   margin-top: 5%;
-  margin-left: 6%; 
+  margin-left: 6%;
   border-bottom-right-radius: 5px;
   width: 100%;
   border-radius: 50%;
@@ -511,7 +511,7 @@ export default {
   height:0px;
   width:95%;
   padding-bottom:60%;
-  float:left; 
+  float:left;
   overflow-y:scroll;
   overflow-x: hidden;
   margin-right: 5%;
@@ -552,7 +552,7 @@ export default {
   margin-top:0em;
   margin-right: 40px;
   margin-left: 0px;
-  margin-bottom:  5px; 
+  margin-bottom:  5px;
 }
 
 </style>
