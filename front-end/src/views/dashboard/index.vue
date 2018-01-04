@@ -1,14 +1,15 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text text-small">Welcome, {{name}}!!
+    <div class="dashboard-text text-small">Welcome, {{name}} !!!
     Your role: <span v-for='role in roles' :key='role'>{{role}}.</span>
-    Current Chosen Team is <el-tag>{{team_info.name}}</el-tag>, Domain <el-tag>{{team_info.domain}}</el-tag>.
+    <br> Current Chosen Team is <el-tag class="text-small">{{team_info.name}}</el-tag>, Domain <el-tag class="text-small">{{team_info.domain}}</el-tag>.
     </div>
-    <h2 style="font-size: 2em">Channel Descpription</h2>
+    <br>
+    <h2 style="font-size: 2em; font-weight: bold;">Channel Description</h2>
       <el-table
     :data="Object.values(this.channel_list)"
     stripe
-    style="width: 100%">
+    style="width: 100%; margin-top: 10px; font-size:16px">
     <el-table-column
       prop="name"
       label="Channel Name"
@@ -64,6 +65,6 @@ export default {
   }
 }
 .text-small {
-    font-size: 1em;
+    font-size: 20px;
 }
 </style>
