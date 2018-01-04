@@ -1,9 +1,29 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">Welcome, {{name}}!!</div>
-    <div class="dashboard-text">Your role: <span v-for='role in roles' :key='role'>{{role}}</span>
-    <p>Current Chosen Team is {{team_info}} {{channel_list}}</p>
+    <div class="dashboard-text text-small">Welcome, {{name}}!!
+    Your role: <span v-for='role in roles' :key='role'>{{role}}.</span>
+    Current Chosen Team is <el-tag>{{team_info.name}}</el-tag>, Domain <el-tag>{{team_info.domain}}</el-tag>.
     </div>
+    <h2 style="font-size: 2em">Channel Descpription</h2>
+      <el-table
+    :data="Object.values(this.channel_list)"
+    stripe
+    style="width: 100%">
+    <el-table-column
+      prop="name"
+      label="Channel Name"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="num_members"
+      label="Number of members"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="purpose"
+      label="Purpose">
+    </el-table-column>
+  </el-table>
     <!--barchart></barchart-->
   </div>
 </template>
@@ -42,5 +62,8 @@ export default {
     font-size: 30px;
     line-height: 46px;
   }
+}
+.text-small {
+    font-size: 1em;
 }
 </style>
