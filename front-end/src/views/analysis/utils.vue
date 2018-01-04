@@ -273,9 +273,15 @@ export default {
       for (var s in this.selected_info) {
         if (count === 1) {
           this.admin2 = this.selected_info[s]
+          if (!this.admin2.image) {
+            this.admin2.image = 'static/friends.svg'
+          }
           this.type = 'edge'
         } else {
           this.admin1 = this.selected_info[s]
+          if (!this.admin2.image) {
+            this.admin2.image = 'static/friends.svg'
+          }
           count++
           this.type = 'node'
         }
