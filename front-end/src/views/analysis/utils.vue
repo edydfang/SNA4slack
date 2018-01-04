@@ -68,7 +68,7 @@
                 <article class="media" v-if="record.user === admin1.id">
                 <figure class="media-right" >
                   <p class="image is-64x64">
-                    <img :src='admin1.image'  class="admin">
+                    <img :src='admin1.image'  class="admin" onError="this.onerror=null;this.src='static/friends.svg';" />
                     <div class='time-text'>{{record.date1}}</div>
                     <div class='time-text2'>{{record.date2}}</div>
                   </p>
@@ -93,7 +93,7 @@
                 </div>
                 <figure class="media-right"  >
                   <p class="image is-64x64">
-                    <img :src='admin2.image'  class="admin">
+                    <img :src='admin2.image'  class="admin" onError="this.onerror=null;this.src='static/friends.svg';" />
                     <div class='time-text'>{{record.date1}}</div>
                     <div class='time-text2'>{{record.date2}}</div>
                   </p>
@@ -127,7 +127,7 @@
                 </div>
                 <div class="text item">
                   <svg-icon icon-class="date" />
-                  <span style='margin-left:3%'>Join Days:</span>
+                  <span style='margin-left:3%'>Joined Days:</span>
                   <span>{{joindays}} days</span>
                 </div>
               </el-row>
@@ -136,7 +136,7 @@
               <article class="media" v-for="record in chat_record" >
                 <figure class="media-right" >
                   <p class="image is-64x64">
-                    <img :src='admin1.image'  class="admin">
+                    <img :src='admin1.image'  class="admin" onError="this.onerror=null;this.src='static/friends.svg';" />
                     <div class='time-text'>{{record.date1}}</div>
                     <div class='time-text2'>{{record.date2}}</div>
                   </p>
